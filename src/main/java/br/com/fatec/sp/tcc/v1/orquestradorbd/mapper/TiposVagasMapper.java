@@ -1,18 +1,22 @@
-package br.com.fatec.sp.tcc.v1.orquestradorbd.controller.mapper;
+package br.com.fatec.sp.tcc.v1.orquestradorbd.mapper;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.Mappings;
 import org.mapstruct.Named;
 
+import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.TiposVagasRequest;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.response.TiposVagasResponse;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.model.TiposVagasModel;
+import br.com.fatec.sp.tcc.v1.orquestradorbd.utils.Utils;
 
-@Mapper
+@Mapper(imports = {Utils.class})
 public interface TiposVagasMapper {
-	
+
 	TiposVagasResponse mapTipoVagaModelToTipoVagaResponse(TiposVagasModel tiposVagasModel);
 
 	@Named("mapTiposVagasModelToTiposVagasResponse")
@@ -28,5 +32,11 @@ public interface TiposVagasMapper {
 
 		return listResponse;
 	}
+
+	@Mappings({
+		@Mapping(target = "tipo", expression = "Utils.uppercase(tiposVagasRequest.getTipo())")
+		
+	})
+	TiposVagasModel mapTiposVagasRequestToTiposVagasModel(TiposVagasRequest tiposVagasRequest);
 
 }

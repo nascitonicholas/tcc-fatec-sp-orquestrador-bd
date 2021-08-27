@@ -2,6 +2,7 @@ package br.com.fatec.sp.tcc.v1.orquestradorbd.model;
 
 import java.sql.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,9 +20,13 @@ public class TiposVagasModel {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long ID;
+	@Column(name = "id")
+	private Long id;
+	@Column(name = "tipo")
 	private String tipo;
-	private Date dtCriacao;
-	private Date dtUltimaAlteracao;
+	@Column(name = "dt_criacao")
+	private Date dataCriacao;
+	@Column(name = "dt_ultima_alteracao")
+	private Date dataUltimaAlteracao;
 
 }
