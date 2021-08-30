@@ -19,6 +19,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers(HttpMethod.DELETE, "*")
 				.permitAll()
 				.anyRequest().permitAll()
+				.and().cors().and().csrf().disable()
 				;
 
 	}
