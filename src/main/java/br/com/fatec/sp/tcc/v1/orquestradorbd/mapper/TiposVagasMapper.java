@@ -8,6 +8,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 import org.mapstruct.Named;
+import org.mapstruct.factory.Mappers;
 
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.TiposVagasRequest;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.response.TiposVagasResponse;
@@ -17,26 +18,24 @@ import br.com.fatec.sp.tcc.v1.orquestradorbd.utils.Utils;
 @Mapper(imports = {Utils.class})
 public interface TiposVagasMapper {
 
-	TiposVagasResponse mapTipoVagaModelToTipoVagaResponse(TiposVagasModel tiposVagasModel);
+    TiposVagasMapper MAPPER = Mappers.getMapper(TiposVagasMapper.class);
 
-	@Named("mapTiposVagasModelToTiposVagasResponse")
-	default List<TiposVagasResponse> mapTiposVagasModelToTiposVagasResponse(List<TiposVagasModel> tiposVagasModel) {
+    TiposVagasResponse mapTipoVagaModelToTipoVagaResponse(TiposVagasModel tiposVagasModel);
 
-		List<TiposVagasResponse> listResponse = new ArrayList<TiposVagasResponse>();
+    @Named("mapTiposVagasModelToTiposVagasResponse")
+    default List<TiposVagasResponse> mapTiposVagasModelToTiposVagasResponse(List<TiposVagasModel> tiposVagasModel) {
 
-		tiposVagasModel.stream().forEach(item -> {
+        List<TiposVagasResponse> listResponse = new ArrayList<TiposVagasResponse>();
 
-			if (Objects.nonNull(item))
-				listResponse.add(mapTipoVagaModelToTipoVagaResponse(item));
-		});
+        tiposVagasModel.stream().forEach(item -> {
 
-		return listResponse;
-	}
+            if (Objects.nonNull(item))
+                listResponse.add(mapTipoVagaModelToTipoVagaResponse(item));
+        });
 
-	@Mappings({
-		@Mapping(target = "tipo", expression = "Utils.uppercase(tiposVagasRequest.getTipo())")
-		
-	})
-	TiposVagasModel mapTiposVagasRequestToTiposVagasModel(TiposVagasRequest tiposVagasRequest);
+        return listResponse;
+    }
+
+    TiposVagasModel mapTiposVagasRequestToTiposVagasModel(TiposVagasRequest tiposVagasRequest);
 
 }

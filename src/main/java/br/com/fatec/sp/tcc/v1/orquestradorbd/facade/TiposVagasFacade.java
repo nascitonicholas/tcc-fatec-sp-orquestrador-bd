@@ -2,6 +2,7 @@ package br.com.fatec.sp.tcc.v1.orquestradorbd.facade;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -15,33 +16,49 @@ import br.com.fatec.sp.tcc.v1.orquestradorbd.repository.TiposVagasRepository;
 @Component
 public class TiposVagasFacade {
 
-	@Autowired
-	private TiposVagasRepository tiposVagasRespository;
+    @Autowired
+    private TiposVagasRepository tiposVagasRespository;
 
-	private TiposVagasMapper tiposVagasMapper;
+    public List<TiposVagasResponse> getTiposVagas() {
 
-	public List<TiposVagasResponse> getTiposVagas() {
+        List<TiposVagasModel> listTiposVagasModel = tiposVagasRespository.findAll();
+        List<TiposVagasResponse> response = new ArrayList<TiposVagasResponse>();
 
-		List<TiposVagasModel> listTiposVagasModel = tiposVagasRespository.findAll();
+        listTiposVagasModel.stream().forEach(item -> {
+            TiposVagasResponse itemResponse = TiposVagasMapper.MAPPER.mapTipoVagaModelToTipoVagaResponse(item);
+            response.add(itemResponse);
+        });
 
-		List<TiposVagasResponse> response = new ArrayList<TiposVagasResponse>();
+        return response;
 
-		listTiposVagasModel.stream().forEach(item -> {
-			TiposVagasResponse itemResponse = tiposVagasMapper.mapTipoVagaModelToTipoVagaResponse(item);
-			response.add(itemResponse);
-		});
+    }
 
-		return response;
+    public void postTiposVagas(List<TiposVagasRequest> tiposVagasRequest) {
 
-	}
 
-	public void postTiposVagas(List<TiposVagasRequest> tiposVagasRequest) {
+        tiposVagasRequest.stream().forEach(item -> {
 
-		tiposVagasRequest.stream().forEach(item -> {
+            if (tipoVagaInexistente(item.getTipo())) {
 
-			tiposVagasRespository.save(tiposVagasMapper.mapTiposVagasRequestToTiposVagasModel(item));
-		});
+                TiposVagasModel model = TiposVagasMapper.MAPPER.mapTiposVagasRequestToTiposVagasModel(item);
 
-	}
+                tiposVagasRespository.save(model);
+            }
 
+        });
+
+    }
+
+    public boolean tipoVagaInexistente(String nomeTipo) {
+
+        return tiposVagasRespository.findByTipo(nomeTipo).isEmpty() ? true : false;
+    }
+
+    public TiposVagasModel getTipoVagaById(Long id) {
+
+        Optional<TiposVagasModel> response = tiposVagasRespository.findAllById(id);
+
+        return response.isPresent()? response.get(): null;
+
+    }
 }

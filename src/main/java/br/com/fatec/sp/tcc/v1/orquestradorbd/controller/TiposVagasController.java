@@ -2,14 +2,11 @@ package br.com.fatec.sp.tcc.v1.orquestradorbd.controller;
 
 import java.util.List;
 
+import br.com.fatec.sp.tcc.v1.orquestradorbd.model.TiposVagasModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import br.com.fatec.sp.tcc.v1.orquestradorbd.config.AbstractController;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.config.SaidaDefault;
@@ -41,6 +38,15 @@ public class TiposVagasController implements AbstractController<SaidaDefault> {
 		return saidaVoid(HttpStatus.CREATED);
 		
 		
+	}
+
+	@GetMapping("/{Id}")
+	public ResponseEntity<?> getTipoVagaById(@PathVariable Long Id){
+
+		TiposVagasModel response = tiposVagasFacade.getTipoVagaById(Id);
+
+		return saidaSimplificada(SaidaDefault.builder().responseBody(response).message("Tipos Encontrados").build(), HttpStatus.OK);
+
 	}
 	
 }
