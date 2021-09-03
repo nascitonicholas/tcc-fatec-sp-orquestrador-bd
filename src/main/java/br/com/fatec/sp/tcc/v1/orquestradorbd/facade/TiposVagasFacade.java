@@ -54,11 +54,11 @@ public class TiposVagasFacade {
         return tiposVagasRespository.findByTipo(nomeTipo).isEmpty() ? true : false;
     }
 
-    public TiposVagasModel getTipoVagaById(Long id) {
+    public Optional<TiposVagasModel> getTipoVagaById(Long id) {
 
         Optional<TiposVagasModel> response = tiposVagasRespository.findAllById(id);
 
-        return response.isPresent()? response.get(): null;
+        return response;
 
     }
 }
