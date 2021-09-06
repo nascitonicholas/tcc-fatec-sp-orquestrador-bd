@@ -1,6 +1,7 @@
 package br.com.fatec.sp.tcc.v1.orquestradorbd.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import br.com.fatec.sp.tcc.v1.orquestradorbd.model.TiposVagasModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,9 +44,17 @@ public class TiposVagasController implements AbstractController<SaidaDefault> {
 	@GetMapping("/{Id}")
 	public ResponseEntity<?> getTipoVagaById(@PathVariable Long Id){
 
-		TiposVagasModel response = tiposVagasFacade.getTipoVagaById(Id);
+		Optional<TiposVagasModel> response = tiposVagasFacade.getTipoVagaById(Id);
 
-		return saidaSimplificada(SaidaDefault.builder().responseBody(response).message("Tipos Encontrados").build(), HttpStatus.OK);
+		if(response.isPresent()){
+
+			saidaSimplificada(SaidaDefault.builder().responseBody(response).message("Tipos Encontrados").build(), HttpStatus.OK);
+		}
+		else{
+			return saidaVoid(HttpStatus.NOT_FOUND);
+		}
+
+
 
 	}
 	

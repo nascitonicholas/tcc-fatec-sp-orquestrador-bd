@@ -8,7 +8,6 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 import org.mapstruct.Named;
-import org.mapstruct.factory.Mappers;
 
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.TiposVagasRequest;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.response.TiposVagasResponse;
@@ -18,7 +17,7 @@ import br.com.fatec.sp.tcc.v1.orquestradorbd.utils.Utils;
 @Mapper(imports = {Utils.class})
 public interface TiposVagasMapper {
 
-    TiposVagasMapper MAPPER = Mappers.getMapper(TiposVagasMapper.class);
+
 
     TiposVagasResponse mapTipoVagaModelToTipoVagaResponse(TiposVagasModel tiposVagasModel);
 
@@ -36,6 +35,18 @@ public interface TiposVagasMapper {
         return listResponse;
     }
 
-    TiposVagasModel mapTiposVagasRequestToTiposVagasModel(TiposVagasRequest tiposVagasRequest);
+    @Mappings({
+            @Mapping(target = "tipo", expression = "java(Utils.uppercase(tiposVagasRequest.getTipo()))"),
+            @Mapping(target = "dataCriacao", expression = "java(Utils.dataAtualFormatada())")
+
+    })
+    TiposVagasModel mapCreateTiposVagasRequestToTiposVagasModel(TiposVagasRequest tiposVagasRequest);
+
+    @Mappings({
+            @Mapping(target = "tipo", expression = "java(Utils.uppercase(tiposVagasRequest.getTipo()))"),
+            @Mapping(target = "dataUltimaAlteracao", expression = "java(Utils.dataAtualFormatada())")
+
+    })
+    TiposVagasModel mapUpdateTiposVagasRequestToTiposVagasModel(TiposVagasRequest tiposVagasRequest);
 
 }

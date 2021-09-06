@@ -1,5 +1,6 @@
 package br.com.fatec.sp.tcc.v1.orquestradorbd.facade;
 
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -13,6 +14,8 @@ import br.com.fatec.sp.tcc.v1.orquestradorbd.mapper.TiposVagasMapper;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.model.TiposVagasModel;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.repository.TiposVagasRepository;
 
+import static org.mapstruct.factory.Mappers.getMapper;
+
 @Component
 public class TiposVagasFacade {
 
@@ -21,11 +24,13 @@ public class TiposVagasFacade {
 
     public List<TiposVagasResponse> getTiposVagas() {
 
+        TiposVagasMapper MAPPER = getMapper(TiposVagasMapper.class);
+
         List<TiposVagasModel> listTiposVagasModel = tiposVagasRespository.findAll();
         List<TiposVagasResponse> response = new ArrayList<TiposVagasResponse>();
 
         listTiposVagasModel.stream().forEach(item -> {
-            TiposVagasResponse itemResponse = TiposVagasMapper.MAPPER.mapTipoVagaModelToTipoVagaResponse(item);
+            TiposVagasResponse itemResponse = MAPPER.mapTipoVagaModelToTipoVagaResponse(item);
             response.add(itemResponse);
         });
 
@@ -35,12 +40,13 @@ public class TiposVagasFacade {
 
     public void postTiposVagas(List<TiposVagasRequest> tiposVagasRequest) {
 
+        TiposVagasMapper MAPPER = getMapper(TiposVagasMapper.class);
 
         tiposVagasRequest.stream().forEach(item -> {
 
             if (tipoVagaInexistente(item.getTipo())) {
 
-                TiposVagasModel model = TiposVagasMapper.MAPPER.mapTiposVagasRequestToTiposVagasModel(item);
+                TiposVagasModel model = MAPPER.mapCreateTiposVagasRequestToTiposVagasModel(item);
 
                 tiposVagasRespository.save(model);
             }
@@ -54,11 +60,11 @@ public class TiposVagasFacade {
         return tiposVagasRespository.findByTipo(nomeTipo).isEmpty() ? true : false;
     }
 
-    public TiposVagasModel getTipoVagaById(Long id) {
+    public Optional<TiposVagasModel> getTipoVagaById(Long id) {
 
         Optional<TiposVagasModel> response = tiposVagasRespository.findAllById(id);
 
-        return response.isPresent()? response.get(): null;
+        return response;
 
     }
 }
