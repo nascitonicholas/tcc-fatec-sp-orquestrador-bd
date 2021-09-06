@@ -3,6 +3,8 @@ package br.com.fatec.sp.tcc.v1.orquestradorbd.controller;
 import java.util.List;
 import java.util.Optional;
 
+import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.TiposVagasRequestDeleted;
+import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.TiposVagasRequestUpdate;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.model.TiposVagasModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import br.com.fatec.sp.tcc.v1.orquestradorbd.config.AbstractController;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.config.SaidaDefault;
-import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.TiposVagasRequest;
+import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.TiposVagasRequestCreate;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.response.TiposVagasResponse;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.facade.TiposVagasFacade;
 
@@ -32,9 +34,9 @@ public class TiposVagasController implements AbstractController<SaidaDefault> {
 	}
 	
 	@PostMapping
-	public ResponseEntity<?> postTiposVagas(@RequestBody List<TiposVagasRequest> tiposVagasRequest){
+	public ResponseEntity<?> postTiposVagas(@RequestBody List<TiposVagasRequestCreate> tiposVagasRequestCreate){
 		
-		tiposVagasFacade.postTiposVagas(tiposVagasRequest);
+		tiposVagasFacade.postTiposVagas(tiposVagasRequestCreate);
 		
 		return saidaVoid(HttpStatus.CREATED);
 		
@@ -48,14 +50,27 @@ public class TiposVagasController implements AbstractController<SaidaDefault> {
 
 		if(response.isPresent()){
 
-			saidaSimplificada(SaidaDefault.builder().responseBody(response).message("Tipos Encontrados").build(), HttpStatus.OK);
+			return saidaSimplificada(SaidaDefault.builder().responseBody(response).message("Tipos Encontrados").build(), HttpStatus.OK);
 		}
 		else{
 			return saidaVoid(HttpStatus.NOT_FOUND);
 		}
+	}
 
+	@PutMapping
+	public ResponseEntity<?> putTiposVagas(@RequestBody List<TiposVagasRequestUpdate> tiposVagasRequestUpdateList){
 
+		tiposVagasFacade.putTiposVagas(tiposVagasRequestUpdateList);
 
+		return saidaVoid(HttpStatus.OK);
+	}
+
+	@DeleteMapping
+	public ResponseEntity<?> deleteTiposVagas(@RequestBody List<TiposVagasRequestDeleted> tiposVagasRequestDeleteds){
+
+		tiposVagasFacade.deleteTiposVagas(tiposVagasRequestDeleteds);
+
+		return saidaVoid(HttpStatus.OK);
 	}
 	
 }
