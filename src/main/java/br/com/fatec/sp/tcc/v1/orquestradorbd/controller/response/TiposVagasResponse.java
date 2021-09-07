@@ -11,9 +11,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class TiposVagasResponse {
 	
-	private Long ID;
+	private Long id;
 	private String tipo;
-	private Date dtCriacao;
-	private Date dtUltimaAlteracao;
+	private String dataCriacao;
+	private String dataUltimaAlteracao;
 
 }
