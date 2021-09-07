@@ -20,7 +20,7 @@ public class CursosModel {
     @Column(name = "nome")
     private String nome;
     @Column(name = "dt_criacao")
-    private Date dataCriacao;
+    private String dataCriacao;
     @Column(name = "dt_ultima_alteracao")
-    private Date dataUltimaAlteracao;
+    private String dataUltimaAlteracao;
 }
