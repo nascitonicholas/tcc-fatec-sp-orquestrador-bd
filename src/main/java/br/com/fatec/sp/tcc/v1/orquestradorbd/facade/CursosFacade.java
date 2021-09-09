@@ -1,5 +1,6 @@
 package br.com.fatec.sp.tcc.v1.orquestradorbd.facade;
 
+import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.CursoRequestDelete;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.CursosRequestCreate;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.CursosRequestUpdate;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.response.CursoResponse;
@@ -66,5 +67,16 @@ public class CursosFacade {
                 cursoRepository.save(cursoModel);
             }
         });
+    }
+
+    public void deleteCursos(List<CursoRequestDelete> cursoRequestDelete) {
+
+        cursoRequestDelete.forEach(item -> {
+            Optional<CursosModel> curso = getCursoById(item.getId());
+            if(curso.isPresent()){
+                cursoRepository.deleteById(item.getId());
+            }
+        });
+
     }
 }
