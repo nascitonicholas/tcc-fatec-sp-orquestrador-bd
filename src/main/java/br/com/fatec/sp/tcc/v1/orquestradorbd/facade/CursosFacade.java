@@ -1,6 +1,7 @@
 package br.com.fatec.sp.tcc.v1.orquestradorbd.facade;
 
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.CursosRequestCreate;
+import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.CursosRequestUpdate;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.response.CursoResponse;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.mapper.CursosMapper;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.model.CursosModel;
@@ -54,5 +55,16 @@ public class CursosFacade {
     public Optional<CursosModel> getCursoById(Long id) {
 
         return cursoRepository.findAllById(id);
+    }
+
+    public void putCursos(List<CursosRequestUpdate> cursosRequestUpdate) {
+
+        cursosRequestUpdate.forEach(item -> {
+            Optional<CursosModel> curso = getCursoById(item.getId());
+            if(curso.isPresent()){
+                CursosModel cursoModel = MAPPER.mapUpdateCursosRequestToCursosModel(item, curso.get());
+                cursoRepository.save(cursoModel);
+            }
+        });
     }
 }

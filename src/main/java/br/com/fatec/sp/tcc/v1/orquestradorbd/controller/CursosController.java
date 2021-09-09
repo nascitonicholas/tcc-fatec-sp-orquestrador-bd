@@ -3,6 +3,7 @@ package br.com.fatec.sp.tcc.v1.orquestradorbd.controller;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.config.AbstractController;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.config.SaidaDefault;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.CursosRequestCreate;
+import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.CursosRequestUpdate;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.response.CursoResponse;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.facade.CursosFacade;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.model.CursosModel;
@@ -51,4 +52,14 @@ public class CursosController implements AbstractController<SaidaDefault> {
             return saidaVoid(HttpStatus.NOT_FOUND);
         }
     }
+
+    @PutMapping
+    public ResponseEntity<?> putCursos(@RequestBody List<CursosRequestUpdate> cursosRequestUpdate){
+
+        cursosFacade.putCursos(cursosRequestUpdate);
+
+        return saidaVoid(HttpStatus.OK);
+    }
+
+
 }
