@@ -5,14 +5,14 @@ import br.com.fatec.sp.tcc.v1.orquestradorbd.config.SaidaDefault;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.CursosRequestCreate;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.response.CursoResponse;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.facade.CursosFacade;
-import br.com.fatec.sp.tcc.v1.orquestradorbd.model.CursosModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
+
+import static br.com.fatec.sp.tcc.v1.orquestradorbd.enums.MensagensEnum.*;
 
 @RestController
 @RequestMapping("/cursos")
@@ -27,7 +27,7 @@ public class CursosController implements AbstractController<SaidaDefault> {
 
         List<CursoResponse> cursos = cursosFacade.getCursos();
 
-        return saidaSimplificada(SaidaDefault.builder().responseBody(cursos).message("Cursos Encontrados").build(), HttpStatus.OK);
+        return saidaSimplificada(SaidaDefault.builder().responseBody(cursos).message(MESSAGE_SUCESSO_LISTA.getMessage()).build(), HttpStatus.OK);
 
     };
 
@@ -36,19 +36,15 @@ public class CursosController implements AbstractController<SaidaDefault> {
 
         cursosFacade.postCursos(cursosRequestCreates);
 
-        return saidaVoid(HttpStatus.CREATED);
+        return saidaSimplificada(SaidaDefault.builder().message(MESSAGE_SUCESSO_CRIACAO.getMessage()).build(), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getCursoById(@PathVariable Long id){
 
-        Optional<CursosModel> response = cursosFacade.getCursoById(id);
+        CursoResponse curso = cursosFacade.getCursoById(id);
 
-        if(response.isPresent()){
-            return saidaSimplificada(SaidaDefault.builder().responseBody(response).message("Curso Encontrado").build(), HttpStatus.OK);
-        }
-        else{
-            return saidaVoid(HttpStatus.NOT_FOUND);
-        }
+        return saidaSimplificada(SaidaDefault.builder().responseBody(curso).message(MESSAGE_SUCESSO_ID.getMessage()).build(), HttpStatus.OK);
+
     }
 }
