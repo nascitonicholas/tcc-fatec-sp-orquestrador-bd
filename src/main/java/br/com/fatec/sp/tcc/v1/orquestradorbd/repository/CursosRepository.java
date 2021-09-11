@@ -8,5 +8,6 @@ import java.util.Optional;
 public interface CursosRepository extends JpaRepository<CursosModel, Long> {
 
     Optional<CursosModel> findByNome(String nome);
-    Optional<CursosModel> findAllById(Long id);
+    Optional<CursosModel> findById(Long id);
+
 }
