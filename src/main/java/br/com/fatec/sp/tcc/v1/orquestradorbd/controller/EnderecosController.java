@@ -2,6 +2,7 @@ package br.com.fatec.sp.tcc.v1.orquestradorbd.controller;
 
 import br.com.fatec.sp.tcc.v1.orquestradorbd.config.AbstractController;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.config.SaidaDefault;
+import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.EnderecoRequestDelete;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.EnderecoRequestUpdate;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.EnderecosRequestCreate;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.response.EnderecoResponse;
@@ -53,5 +54,13 @@ public class EnderecosController  implements AbstractController<SaidaDefault> {
         enderecosFacade.putEndereco(enderecoRequestUpdate);
 
         return saidaSimplificada(SaidaDefault.builder().message(MESSAGE_SUCESSO_ATUALIZACAO.getMessage()).build(), HttpStatus.OK);
+    }
+
+    @DeleteMapping
+    public ResponseEntity<?> deleteEnderecos(@RequestBody @Validated EnderecoRequestDelete enderecoRequestDelete){
+
+        enderecosFacade.deleteEnderecos(enderecoRequestDelete);
+
+        return saidaSimplificada(SaidaDefault.builder().message(MESSAGE_SUCESSO_DELETADAS.getMessage()).build(), HttpStatus.OK);
     }
 }

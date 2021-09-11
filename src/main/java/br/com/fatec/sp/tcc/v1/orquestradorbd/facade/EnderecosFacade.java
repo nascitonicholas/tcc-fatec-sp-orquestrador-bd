@@ -1,5 +1,6 @@
 package br.com.fatec.sp.tcc.v1.orquestradorbd.facade;
 
+import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.EnderecoRequestDelete;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.EnderecoRequestUpdate;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.EnderecosRequestCreate;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.response.EnderecoResponse;
@@ -73,6 +74,23 @@ public class EnderecosFacade {
 
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, MESSAGE_ERROR_UPDATE.getMessage() + e);
         }
+    }
+
+    public void deleteEnderecos(EnderecoRequestDelete enderecoRequestDelete){
+
+        try{
+            enderecoRequestDelete.getRequestDelete().forEach(item ->{
+                Optional<EnderecosModel> enderecoById = enderecosRepository.findById(item.getId());
+                if(enderecoById.isPresent()){
+                    enderecosRepository.deleteById(item.getId());
+                }
+            });
+
+        }catch (Exception e){
+
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, MESSAGE_ERROR_DELETE.getMessage() + e);
+        }
+
     }
 
 
