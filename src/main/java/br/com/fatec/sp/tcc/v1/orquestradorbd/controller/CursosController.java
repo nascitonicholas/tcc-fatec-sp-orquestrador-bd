@@ -13,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 import static br.com.fatec.sp.tcc.v1.orquestradorbd.enums.MensagensEnum.*;
@@ -33,7 +32,7 @@ public class CursosController implements AbstractController<SaidaDefault> {
 
         return saidaSimplificada(SaidaDefault.builder().responseBody(cursos).message(MESSAGE_SUCESSO_LISTA.getMessage()).build(), HttpStatus.OK);
 
-    };
+    }
 
     @PostMapping
     public ResponseEntity<?> postCursos(@RequestBody @Validated CursosRequestCreate cursosRequestCreates){
@@ -61,11 +60,11 @@ public class CursosController implements AbstractController<SaidaDefault> {
     }
 
     @DeleteMapping
-    public ResponseEntity<?> deleteCursos(@RequestBody List<CursoRequestDelete> cursoRequestDelete){
+    public ResponseEntity<?> deleteCursos(@RequestBody @Validated CursoRequestDelete cursoRequestDelete){
 
         cursosFacade.deleteCursos(cursoRequestDelete);
 
-        return saidaVoid(HttpStatus.OK);
+        return saidaSimplificada(SaidaDefault.builder().message(MESSAGE_SUCESSO_DELETADAS.getMessage()).build(), HttpStatus.OK);
     }
 
 

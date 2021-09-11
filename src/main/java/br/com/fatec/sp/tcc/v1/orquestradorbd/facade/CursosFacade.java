@@ -86,7 +86,21 @@ public class CursosFacade {
         }
     }
 
-    public void deleteCursos(List<CursoRequestDelete> cursoRequestDelete) {
+    public void deleteCursos(CursoRequestDelete cursoRequestDelete) {
+
+        try{
+            cursoRequestDelete.getRequestDelete().forEach(item -> {
+                Optional<CursosModel> curso = cursoRepository.findById(item.getId());
+                if(curso.isPresent()){
+                    cursoRepository.deleteById(item.getId());
+                }
+            });
+        }catch (Exception e){
+
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, MESSAGE_ERROR_DELETE.getMessage() + e);
+        }
+
+
 
     }
 
