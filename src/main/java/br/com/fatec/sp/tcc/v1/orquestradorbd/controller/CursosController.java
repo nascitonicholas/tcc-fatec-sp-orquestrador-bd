@@ -10,8 +10,10 @@ import br.com.fatec.sp.tcc.v1.orquestradorbd.facade.CursosFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 import static br.com.fatec.sp.tcc.v1.orquestradorbd.enums.MensagensEnum.*;
@@ -34,7 +36,7 @@ public class CursosController implements AbstractController<SaidaDefault> {
     };
 
     @PostMapping
-    public ResponseEntity<?> postCursos(@RequestBody List<CursosRequestCreate> cursosRequestCreates){
+    public ResponseEntity<?> postCursos(@RequestBody @Validated CursosRequestCreate cursosRequestCreates){
 
         cursosFacade.postCursos(cursosRequestCreates);
 
@@ -51,11 +53,11 @@ public class CursosController implements AbstractController<SaidaDefault> {
     }
 
     @PutMapping
-    public ResponseEntity<?> putCursos(@RequestBody List<CursosRequestUpdate> cursosRequestUpdate){
+    public ResponseEntity<?> putCursos(@RequestBody @Validated CursosRequestUpdate cursosRequestUpdate){
 
         cursosFacade.putCursos(cursosRequestUpdate);
 
-        return saidaVoid(HttpStatus.OK);
+        return saidaSimplificada(SaidaDefault.builder().message(MESSAGE_SUCESSO_ATUALIZACAO.getMessage()).build(), HttpStatus.OK);
     }
 
     @DeleteMapping

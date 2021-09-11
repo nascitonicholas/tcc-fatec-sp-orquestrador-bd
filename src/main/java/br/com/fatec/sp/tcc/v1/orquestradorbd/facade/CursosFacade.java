@@ -2,6 +2,7 @@ package br.com.fatec.sp.tcc.v1.orquestradorbd.facade;
 
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.CursoRequestDelete;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.CursosRequestCreate;
+import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.CursosRequestUpdate;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.response.CursoResponse;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.mapper.CursosMapper;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.model.CursosModel;
@@ -13,9 +14,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 
-import static br.com.fatec.sp.tcc.v1.orquestradorbd.enums.MensagensErrorEnum.MESSAGE_ERROR_CREATE;
-import static br.com.fatec.sp.tcc.v1.orquestradorbd.enums.MensagensErrorEnum.MESSAGE_ERROR_FIND;
+import static br.com.fatec.sp.tcc.v1.orquestradorbd.enums.MensagensErrorEnum.*;
 
 @Component
 public class CursosFacade {
@@ -44,10 +45,10 @@ public class CursosFacade {
         }
     }
 
-    public void postCursos(List<CursosRequestCreate> cursosRequestCreates) {
+    public void postCursos(CursosRequestCreate cursosRequestCreates) {
 
         try {
-            cursosRequestCreates.forEach(item -> {
+            cursosRequestCreates.getRequest().forEach(item -> {
                 if (cursoInexistente(item.getNome())) {
                     CursosModel model = cursosMapper.mapCreateCursosRequestToCursosModel(item);
 
@@ -66,6 +67,24 @@ public class CursosFacade {
     }
 
 
+
+    public void putCursos(CursosRequestUpdate cursosRequestUpdate) {
+
+        try{
+            cursosRequestUpdate.getRequest().forEach(item -> {
+                Optional<CursosModel> curso = cursoRepository.findById(item.getId());
+                if(curso.isPresent()){
+                    CursosModel cursoModel = cursosMapper.mapUpdateCursosRequestToCursosModel(item, curso.get());
+                    cursoRepository.save(cursoModel);
+                }
+
+            });
+
+        }catch (Exception e){
+
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, MESSAGE_ERROR_UPDATE.getMessage() + e);
+        }
+    }
 
     public void deleteCursos(List<CursoRequestDelete> cursoRequestDelete) {
 
