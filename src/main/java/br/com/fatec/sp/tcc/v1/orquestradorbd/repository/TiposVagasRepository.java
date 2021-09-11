@@ -13,6 +13,4 @@ public interface TiposVagasRepository extends JpaRepository<TiposVagasModel, Lon
 
     Optional<TiposVagasModel> findByTipo(String tipo);
 
-    Optional<TiposVagasModel> findAllById(Long id);
-
 }
