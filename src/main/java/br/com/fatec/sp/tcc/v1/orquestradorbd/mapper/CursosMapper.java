@@ -13,6 +13,8 @@ import org.mapstruct.Named;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import static br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.CursosRequestUpdate.*;
+import static br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.CursosRequestCreate.*;
 
 @Mapper(imports = {Utils.class})
 public interface CursosMapper {
@@ -34,19 +36,19 @@ public interface CursosMapper {
     }
 
     @Mappings({
-            @Mapping(target = "nome", expression = "java(Utils.uppercase(cursosRequestCreate.getNome()))"),
+            @Mapping(target = "nome", expression = "java(Utils.uppercase(requestCreate.getNome()))"),
             @Mapping(target = "dataCriacao", expression = "java(Utils.dataAtualFormatada())")
 
     })
-    CursosModel mapCreateCursosRequestToCursosModel(CursosRequestCreate cursosRequestCreate);
+    CursosModel mapCreateCursosRequestToCursosModel(RequestCreate requestCreate);
 
     @Mappings({
             @Mapping(source = "cursosModel.id", target = "id"),
-            @Mapping(target = "nome", expression = "java(Utils.uppercase(cursosRequestUpdate.getNome()))"),
+            @Mapping(target = "nome", expression = "java(Utils.uppercase(request.getNome()))"),
             @Mapping(target = "dataUltimaAlteracao", expression = "java(Utils.dataAtualFormatada())")
 
     })
-    CursosModel mapUpdateCursosRequestToCursosModel(CursosRequestUpdate cursosRequestUpdate, CursosModel cursosModel);
+    CursosModel mapUpdateCursosRequestToCursosModel(RequestUpdate request, CursosModel cursosModel);
 
 
 }
