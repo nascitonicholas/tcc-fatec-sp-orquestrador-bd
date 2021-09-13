@@ -2,15 +2,16 @@ package br.com.fatec.sp.tcc.v1.orquestradorbd.controller;
 
 import br.com.fatec.sp.tcc.v1.orquestradorbd.config.AbstractController;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.config.SaidaDefault;
+import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.TurnoRequestCreate;
+import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.TurnoRequestDelete;
+import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.TurnoRequestUpdate;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.response.TurnosResponse;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.facade.TurnosFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import static br.com.fatec.sp.tcc.v1.orquestradorbd.enums.MensagensEnum.*;
@@ -37,5 +38,29 @@ public class TurnosController implements AbstractController<SaidaDefault> {
 
         return saidaSimplificada(SaidaDefault.builder().responseBody(turno).message(MESSAGE_SUCESSO_ID.getMessage()).build(), HttpStatus.OK);
 
+    }
+
+    @PostMapping
+    public ResponseEntity<?> postTurnos(@RequestBody @Validated TurnoRequestCreate turnoRequestCreate){
+
+        turnosFacade.postTurnos(turnoRequestCreate);
+
+        return saidaSimplificada(SaidaDefault.builder().message(MESSAGE_SUCESSO_CRIACAO.getMessage()).build(), HttpStatus.CREATED);
+    }
+
+    @PutMapping
+    public ResponseEntity<?> putTurnos(@RequestBody @Validated TurnoRequestUpdate turnoRequestUpdate){
+
+        turnosFacade.putTurnos(turnoRequestUpdate);
+
+        return saidaSimplificada(SaidaDefault.builder().message(MESSAGE_SUCESSO_ATUALIZACAO.getMessage()).build(), HttpStatus.CREATED);
+    }
+
+    @DeleteMapping
+    public ResponseEntity<?> deleteTurnos(@RequestBody @Validated TurnoRequestDelete turnoRequestDelete){
+
+        turnosFacade.deleteTurnos(turnoRequestDelete);
+
+        return saidaSimplificada(SaidaDefault.builder().message(MESSAGE_SUCESSO_DELETADAS.getMessage()).build(), HttpStatus.OK);
     }
 }
