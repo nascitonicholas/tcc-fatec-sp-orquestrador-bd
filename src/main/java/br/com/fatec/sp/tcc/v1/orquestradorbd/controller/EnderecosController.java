@@ -34,7 +34,7 @@ public class EnderecosController  implements AbstractController<SaidaDefault> {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getEnderecoById(Long id){
+    public ResponseEntity<?> getEnderecoById(@PathVariable Long id){
 
         EnderecoResponse endereco = enderecosFacade.getEnderecoById(id);
 
