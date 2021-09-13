@@ -1,5 +1,6 @@
 package br.com.fatec.sp.tcc.v1.orquestradorbd.facade;
 
+import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.CursoRequestDelete;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.CursosRequestCreate;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.CursosRequestUpdate;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.response.CursoResponse;
@@ -66,6 +67,7 @@ public class CursosFacade {
     }
 
 
+
     public void putCursos(CursosRequestUpdate cursosRequestUpdate) {
 
         try{
@@ -83,4 +85,23 @@ public class CursosFacade {
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, MESSAGE_ERROR_UPDATE.getMessage() + e);
         }
     }
+
+    public void deleteCursos(CursoRequestDelete cursoRequestDelete) {
+
+        try{
+            cursoRequestDelete.getRequestDelete().forEach(item -> {
+                Optional<CursosModel> curso = cursoRepository.findById(item.getId());
+                if(curso.isPresent()){
+                    cursoRepository.deleteById(item.getId());
+                }
+            });
+        }catch (Exception e){
+
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, MESSAGE_ERROR_DELETE.getMessage() + e);
+        }
+
+
+
+    }
+
 }
