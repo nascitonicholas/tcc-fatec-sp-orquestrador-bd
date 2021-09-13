@@ -1,5 +1,6 @@
 package br.com.fatec.sp.tcc.v1.orquestradorbd.utils;
 
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -15,6 +16,14 @@ public class Utils {
 		LocalDateTime today = LocalDateTime .now();
 		DateTimeFormatter formatter  = DateTimeFormatter.ofPattern(formation);
 		return today.format(formatter);
+	}
+
+	public static String isNotNullOrEmpty(String entrada, String atual){
+
+		if(entrada.isBlank()){
+			return atual;
+		}
+		return  uppercase(entrada);
 	}
 
 }
