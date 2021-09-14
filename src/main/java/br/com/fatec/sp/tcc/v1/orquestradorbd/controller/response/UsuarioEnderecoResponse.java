@@ -5,12 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class EnderecoResponse {
+@NoArgsConstructor
+@Data
+public class UsuarioEnderecoResponse {
 
-    @JsonProperty("id")
+    @JsonProperty("id_endereco")
     private Long id;
     @JsonProperty("logradouro")
     private String logradouro;

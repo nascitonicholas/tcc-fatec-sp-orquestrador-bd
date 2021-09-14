@@ -14,7 +14,7 @@ public class EnderecosModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "id_endereco")
     private Long id;
     @Column(name = "logradouro")
     private String logradouro;
@@ -30,6 +30,9 @@ public class EnderecosModel {
     private String estado;
     @Column(name = "cep")
     private String cep;
+    //@ManyToOne
+    //@JoinColumn(name = "id_endereco_usuario", referencedColumnName = "id_usuario")
+    //private UsuariosModel usuario;
     @Column(name = "dt_criacao")
     private String dataCriacao;
     @Column(name = "dt_ultima_alteracao")

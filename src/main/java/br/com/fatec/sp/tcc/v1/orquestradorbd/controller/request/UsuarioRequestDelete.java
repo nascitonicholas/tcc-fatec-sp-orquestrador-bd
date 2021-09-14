@@ -6,25 +6,25 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class TurnoRequestCreate {
+@Data
+public class UsuarioRequestDelete {
 
     @Valid
-    @JsonProperty("lista_turnos")
-    private List<RequestCreate> request;
+    @JsonProperty("lista_usuarios")
+    private List<RequestDelete> request;
 
-    @Data
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class RequestCreate {
+    @Data
+    public static class RequestDelete{
 
-        @NotBlank(message = "Nome deve ser informado")
-        @JsonProperty("nome")
-        private String nome;
+        @JsonProperty("id_usuario")
+        @NotNull(message = "ID deve ser informado")
+        private Long id;
     }
 }

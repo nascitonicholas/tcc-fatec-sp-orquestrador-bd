@@ -14,7 +14,7 @@ public class TurnosModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "id_turno")
     private Long id;
     @Column(name = "nome")
     private String nome;
