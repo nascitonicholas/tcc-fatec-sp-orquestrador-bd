@@ -1,7 +1,5 @@
 package br.com.fatec.sp.tcc.v1.orquestradorbd.mapper;
 
-import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.EnderecoRequestUpdate;
-import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.EnderecosRequestCreate;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.response.EnderecoResponse;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.model.EnderecosModel;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.utils.Utils;
@@ -13,8 +11,9 @@ import org.mapstruct.Named;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import static br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.EnderecosRequestCreate.*;
-import static br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.EnderecoRequestUpdate.*;
+
+import static br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.EnderecoRequestUpdate.RequestUpdate;
+import static br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.EnderecosRequestCreate.RequestCreate;
 
 @Mapper(imports = {Utils.class})
 public interface EnderecosMapper {

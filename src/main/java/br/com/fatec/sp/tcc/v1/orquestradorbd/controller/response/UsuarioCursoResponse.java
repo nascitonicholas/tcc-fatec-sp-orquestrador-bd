@@ -8,9 +8,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class TurnosResponse {
+public class UsuarioCursoResponse {
 
-    @JsonProperty("id")
+    @JsonProperty("id_curso")
     private Long id;
     @JsonProperty("nome")
     private String nome;
