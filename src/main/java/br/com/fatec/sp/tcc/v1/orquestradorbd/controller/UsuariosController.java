@@ -3,6 +3,7 @@ package br.com.fatec.sp.tcc.v1.orquestradorbd.controller;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.config.AbstractController;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.config.SaidaDefault;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.UsuarioRequestDelete;
+import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.UsuarioRequestUpdate;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.UsuariosRequestCreate;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.response.UsuarioResponse;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.facade.UsuariosFacade;
@@ -49,7 +50,13 @@ public class UsuariosController implements AbstractController<SaidaDefault> {
         return saidaSimplificada(SaidaDefault.builder().message(MESSAGE_SUCESSO_CRIACAO.getMessage()).build(), HttpStatus.CREATED);
     }
 
-    /*TO DO PUT*/
+    @PutMapping
+    public ResponseEntity<?> putUsuarios(@RequestBody @Validated UsuarioRequestUpdate usuarioRequestUpdate){
+
+        usuariosFacade.putUsuarios(usuarioRequestUpdate);
+
+        return saidaSimplificada(SaidaDefault.builder().message(MESSAGE_SUCESSO_ATUALIZACAO.getMessage()).build(), HttpStatus.CREATED);
+    }
 
     @DeleteMapping
     public ResponseEntity<?> deleteUsuarios(@RequestBody @Validated UsuarioRequestDelete usuarioRequestDelete){
