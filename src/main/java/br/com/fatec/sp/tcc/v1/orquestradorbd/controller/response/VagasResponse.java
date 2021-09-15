@@ -53,5 +53,5 @@ public class VagasResponse {
     private TiposVagasResponse  tipoVaga;
 
     @JsonProperty("endereco")
-    private EnderecoResponse endereco;
+    private EnderecoResponse enderecoVaga;
 }

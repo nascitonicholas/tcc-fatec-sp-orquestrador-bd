@@ -29,7 +29,8 @@ public interface VagasMapper {
     }
 
     @Mappings({
-            @Mapping(target = "dataCriacao", expression = "java(Utils.dataAtualFormatada())")
+            @Mapping(target = "dataCriacao", expression = "java(Utils.dataAtualFormatada())"),
+            @Mapping(target = "dataVencimento", expression = "java(Utils.fortacaoData(requestCreate.getDataVencimento()))")
     })
     VagasModel mapCreateVagaRequestToVagaModel(RequestCreate requestCreate);
 
