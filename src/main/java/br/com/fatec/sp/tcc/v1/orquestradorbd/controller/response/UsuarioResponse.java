@@ -1,7 +1,5 @@
 package br.com.fatec.sp.tcc.v1.orquestradorbd.controller.response;
 
-import br.com.fatec.sp.tcc.v1.orquestradorbd.model.CursosModel;
-import br.com.fatec.sp.tcc.v1.orquestradorbd.model.TurnosModel;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -35,11 +33,11 @@ public class UsuarioResponse {
     @JsonProperty("celular")
     private String celular;
     @JsonProperty("enderecos")
-    private List<UsuarioEnderecoResponse> enderecos;
+    private List<EnderecoResponse> enderecos;
     @JsonProperty("curso")
-    private UsuarioCursoResponse curso;
+    private CursoResponse curso;
     @JsonProperty("turno")
-    private UsuarioTurnoResponse turno;
+    private TurnosResponse turno;
     @JsonProperty("data_criacao")
     private String dataCriacao;
     @JsonProperty("data_ultima_alteracao")
