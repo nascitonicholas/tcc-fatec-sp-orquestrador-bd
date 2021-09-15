@@ -26,4 +26,9 @@ public class Utils {
 		return  uppercase(entrada);
 	}
 
+	public static Integer numeroDivergente(Integer input, Integer atual){
+
+		return input != atual ? input : atual;
+	}
+
 }

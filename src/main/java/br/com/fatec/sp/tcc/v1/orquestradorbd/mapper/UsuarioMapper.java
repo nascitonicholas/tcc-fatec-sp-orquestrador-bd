@@ -1,10 +1,5 @@
 package br.com.fatec.sp.tcc.v1.orquestradorbd.mapper;
 
-import static br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.UsuariosRequestCreate.RequestCreate;
-import static br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.UsuarioRequestUpdate.RequestUpdate;
-
-import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.EnderecoRequestUpdate;
-import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.UsuariosRequestCreate;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.response.UsuarioResponse;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.model.UsuariosModel;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.utils.Utils;
@@ -16,6 +11,9 @@ import org.mapstruct.Named;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+
+import static br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.UsuarioRequestUpdate.RequestUpdate;
+import static br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.UsuariosRequestCreate.RequestCreate;
 
 @Mapper(imports = {Utils.class})
 public interface UsuarioMapper {
