@@ -5,10 +5,7 @@ import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.VagasRequestDele
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.VagasRequestUpdate;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.response.VagasResponse;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.mapper.VagasMapper;
-import br.com.fatec.sp.tcc.v1.orquestradorbd.model.CursosModel;
-import br.com.fatec.sp.tcc.v1.orquestradorbd.model.EnderecosModel;
-import br.com.fatec.sp.tcc.v1.orquestradorbd.model.TiposVagasModel;
-import br.com.fatec.sp.tcc.v1.orquestradorbd.model.VagasModel;
+import br.com.fatec.sp.tcc.v1.orquestradorbd.model.*;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.repository.*;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,6 +63,7 @@ public class VagasFacade {
                 validarCurso(item.getIdCurso(), vagasModel);
                 validarTipoVaga(item.getIdTipoVaga(), vagasModel);
                 validarEndereco(item.getIdEnderecoVaga(), vagasModel);
+                validarUsuario(item.getIdUsuario(), vagasModel);
                 vagasRepository.save(vagasModel);
 
             });
@@ -87,6 +85,7 @@ public class VagasFacade {
                     VagasModel vagasModel = vagasMapper.mapUpdateVagaRequestToVagaModel(item, vagaModel.get());
                     validarCurso(item.getIdCurso(), vagasModel);
                     validarTipoVaga(item.getIdTipoVaga(), vagasModel);
+                    validarUsuario(item.getIdUsuario(), vagasModel);
                     validarEndereco(item.getIdEnderecoVaga(), vagasModel);
                     vagasRepository.save(vagasModel);
                 }
@@ -148,4 +147,15 @@ public class VagasFacade {
         }
 
     }
+    private void validarUsuario(Long idUsuario, VagasModel vagasModel) {
+
+        Optional<UsuariosModel> usuario = usuariosRepository.findById(idUsuario);
+
+        if(usuario.isPresent()){
+            vagasModel.setUsuario(usuario.get());
+        }else{
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, MESSAGE_ERROR_FOREING_KEY.messageErroFk("id_usuario"));
+        }
+    }
+
 }
