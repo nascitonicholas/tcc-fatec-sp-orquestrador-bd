@@ -61,6 +61,7 @@ public class VagasRequestUpdate {
         @JsonProperty("id_curso")
         private Long  idCurso;
 
+        @NotNull(message = "Id do usuário deve ser informado")
         @JsonProperty("id_usuario")
         private Long  idUsuario;
 

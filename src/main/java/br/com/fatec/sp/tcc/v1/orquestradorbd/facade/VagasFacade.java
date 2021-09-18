@@ -4,7 +4,6 @@ import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.VagasRequestCrea
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.VagasRequestDelete;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.VagasRequestUpdate;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.response.VagasResponse;
-import br.com.fatec.sp.tcc.v1.orquestradorbd.mapper.UsuarioMapper;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.mapper.VagasMapper;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.model.*;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.repository.*;
@@ -14,10 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.ExecutionException;
 
 import static br.com.fatec.sp.tcc.v1.orquestradorbd.enums.MensagensErrorEnum.*;
 
@@ -64,9 +61,9 @@ public class VagasFacade {
             vagasRequestCreate.getRequest().stream().forEach(item ->{
                 VagasModel vagasModel = vagasMapper.mapCreateVagaRequestToVagaModel(item);
                 validarCurso(item.getIdCurso(), vagasModel);
-                validarUsuario(item.getIdUsuario(), vagasModel);
                 validarTipoVaga(item.getIdTipoVaga(), vagasModel);
                 validarEndereco(item.getIdEnderecoVaga(), vagasModel);
+                validarUsuario(item.getIdUsuario(), vagasModel);
                 vagasRepository.save(vagasModel);
 
             });
@@ -87,8 +84,8 @@ public class VagasFacade {
                 if(vagaModel.isPresent()){
                     VagasModel vagasModel = vagasMapper.mapUpdateVagaRequestToVagaModel(item, vagaModel.get());
                     validarCurso(item.getIdCurso(), vagasModel);
-                    validarUsuario(item.getIdUsuario(), vagasModel);
                     validarTipoVaga(item.getIdTipoVaga(), vagasModel);
+                    validarUsuario(item.getIdUsuario(), vagasModel);
                     validarEndereco(item.getIdEnderecoVaga(), vagasModel);
                     vagasRepository.save(vagasModel);
                 }
@@ -150,7 +147,6 @@ public class VagasFacade {
         }
 
     }
-
     private void validarUsuario(Long idUsuario, VagasModel vagasModel) {
 
         Optional<UsuariosModel> usuario = usuariosRepository.findById(idUsuario);
@@ -161,4 +157,5 @@ public class VagasFacade {
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, MESSAGE_ERROR_FOREING_KEY.messageErroFk("id_usuario"));
         }
     }
+
 }

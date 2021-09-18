@@ -43,11 +43,11 @@ public class VagasResponse {
     @JsonProperty("observacoes")
     private String observacoes;
 
-    @JsonProperty("curso")
-    private CursoResponse curso;
-
     @JsonProperty("usuario")
     private UsuarioResponse  usuario;
+
+    @JsonProperty("curso")
+    private CursoResponse curso;
 
     @JsonProperty("tipo_vaga")
     private TiposVagasResponse  tipoVaga;

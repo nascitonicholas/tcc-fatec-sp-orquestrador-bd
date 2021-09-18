@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class TiposVagasResponse {
 
-	@JsonProperty("id")
+	@JsonProperty("id_tipo_vaga")
 	private Long id;
 	@JsonProperty("tipo")
 	private String tipo;
