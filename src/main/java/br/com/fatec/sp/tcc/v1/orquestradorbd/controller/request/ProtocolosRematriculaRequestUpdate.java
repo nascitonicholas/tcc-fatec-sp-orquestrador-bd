@@ -25,7 +25,7 @@ public class ProtocolosRematriculaRequestUpdate {
 
         @JsonProperty("id_protocolo_rematricula")
         private Long id;
-        @JsonProperty("id_materia")
+        @JsonProperty("ids_materias")
         private List<Long> idMateria;
         @JsonProperty("id_aluno")
         private Long idAluno;
