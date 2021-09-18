@@ -39,4 +39,9 @@ public class Utils {
         return input != atual ? input : atual;
     }
 
+
+    public static void main(String[] args) {
+
+    }
+
 }

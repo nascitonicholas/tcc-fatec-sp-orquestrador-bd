@@ -67,10 +67,6 @@ public class VagasRequestCreate {
         @JsonProperty("id_curso")
         private Long  idCurso;
 
-        @NotNull(message = "Id do usuário deve ser informado")
-        @JsonProperty("id_usuario")
-        private Long  idUsuario;
-
         @NotNull(message = "Id do tipo da vaga deve ser informado")
         @JsonProperty("id_tipo_vaga")
         private Long  idTipoVaga;

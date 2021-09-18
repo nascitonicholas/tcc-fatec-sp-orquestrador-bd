@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -40,9 +39,6 @@ public class VagasModel {
     @OneToOne
     @JoinColumn(name = "id_curso_vaga")
     private CursosModel curso;
-    @ManyToOne
-    @JoinColumn(name = "id_usuario_vaga")
-    private UsuariosModel usuario;
     @OneToOne
     @JoinColumn(name = "id_tipo_vaga")
     private TiposVagasModel tipoVaga;

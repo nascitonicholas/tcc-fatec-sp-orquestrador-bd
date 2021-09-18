@@ -61,9 +61,6 @@ public class VagasRequestUpdate {
         @JsonProperty("id_curso")
         private Long  idCurso;
 
-        @JsonProperty("id_usuario")
-        private Long  idUsuario;
-
         @JsonProperty("id_tipo_vaga")
         private Long  idTipoVaga;
 
