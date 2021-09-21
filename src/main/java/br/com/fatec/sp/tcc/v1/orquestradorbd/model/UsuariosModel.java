@@ -21,6 +21,8 @@ public class UsuariosModel {
     private String nome;
     @Column(name = "email")
     private String email;
+    @Column(name = "senha")
+    private String senha;
     @Column(name = "cpf")
     private String cpf;
     @Column(name = "rg")
