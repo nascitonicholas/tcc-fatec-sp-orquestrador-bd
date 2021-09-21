@@ -43,6 +43,19 @@ public class ProtocolosRematriculaFacade {
         return protocolosRematriculasMapper.mapProtocolosRematriculasModelToProtocolosRematriculasResponse(protocolosRematriculaRepository.findAll());
     }
 
+    public List<ProtocolosRematriculaResponse> getProtocolosRematriculasByUsuario(Long idAluno){
+
+        try{
+
+            return protocolosRematriculasMapper.mapProtocolosRematriculasModelToProtocolosRematriculasResponse(protocolosRematriculaRepository.findByAluno(usuariosRepository.findById(idAluno).get()).get());
+
+        }catch (Exception e){
+
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, MESSAGE_ERROR_FIND.getMessage() + e);
+        }
+
+    }
+
     public ProtocolosRematriculaResponse getProtocolosRematriculaById(Long id) {
         try {
 

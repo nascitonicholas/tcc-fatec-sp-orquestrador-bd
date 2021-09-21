@@ -17,6 +17,9 @@ import java.util.stream.Collectors;
 @Mapper(imports = {Utils.class})
 public interface ProtocolosRematriculasMapper {
 
+    @Mappings({
+            @Mapping(source = "protocolosRematriculaModel.aluno", target = "aluno")
+    })
     ProtocolosRematriculaResponse mapProtocoloRematriculaModelToProtocoloRematriculaResponse(ProtocolosRematriculaModel protocolosRematriculaModel);
 
     @Named("mapProtocolosRematriculasModelToProtocolosRematriculasResponse")

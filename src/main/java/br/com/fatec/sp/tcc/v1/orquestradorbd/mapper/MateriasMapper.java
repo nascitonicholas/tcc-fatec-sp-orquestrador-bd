@@ -17,6 +17,9 @@ import java.util.stream.Collectors;
 @Mapper(imports = {Utils.class})
 public interface MateriasMapper {
 
+    @Mappings({
+            @Mapping(source = "materiasModel.professores", target = "professores")
+    })
     MateriasResponse mapMateriasModelToMateriasResponse(MateriasModel materiasModel);
 
     @Named("mapMateriasModelToMateriasResponse")
