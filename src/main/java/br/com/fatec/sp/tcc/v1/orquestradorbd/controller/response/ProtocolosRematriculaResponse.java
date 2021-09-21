@@ -20,10 +20,10 @@ public class ProtocolosRematriculaResponse {
     private Long id;
     @JsonProperty("cod_protocolo")
     private String codProtrocolo;
-    @JsonProperty("ids_materia")
+    @JsonProperty("materias")
     private List<MateriasResponse> materias;
-    @JsonProperty("id_aluno")
-    private UsuariosModel aluno;
+    @JsonProperty("aluno")
+    private UsuarioResponseSimples aluno;
     @JsonProperty("ano_semestre_rematricula")
     private String anoSemestreRematricula;
     @JsonProperty("dt_criacao")

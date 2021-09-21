@@ -21,7 +21,7 @@ public class MateriasResponse {
     @JsonProperty("semestre")
     private String semestre;
     @JsonProperty("professores")
-    private List<UsuarioResponse> professores;
+    private List<UsuarioResponseSimples> professores;
     @JsonProperty("data_criacao")
     private String dataCriacao;
     @JsonProperty("data_ultima_alteracao")

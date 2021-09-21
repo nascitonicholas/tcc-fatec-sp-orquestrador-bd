@@ -39,6 +39,14 @@ public class ProtocolosRematriculaController implements AbstractController<Saida
 
     }
 
+    @GetMapping("/usuario/{idUsuario}")
+    public ResponseEntity<?> getProtocoloRematriculaByUsuario(@PathVariable Long idUsuario){
+
+        List<ProtocolosRematriculaResponse> protocolosRematriculasByUsuario = protocolosRematriculaFacade.getProtocolosRematriculasByUsuario(idUsuario);
+
+        return saidaSimplificada(SaidaDefault.builder().responseBody(protocolosRematriculasByUsuario).message(MESSAGE_SUCESSO_LISTA.getMessage()).build(), HttpStatus.OK);
+    }
+
 
     @PostMapping
     public ResponseEntity<?> postProtocolosRematriculas(@RequestBody @Validated ProtocolosRematriculaRequestCreate protocolosRematriculaRequestCreate){
