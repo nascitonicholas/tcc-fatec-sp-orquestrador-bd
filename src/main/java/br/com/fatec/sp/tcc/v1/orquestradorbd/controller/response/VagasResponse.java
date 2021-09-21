@@ -44,7 +44,7 @@ public class VagasResponse {
     private String observacoes;
 
     @JsonProperty("usuario")
-    private UsuarioResponse  usuario;
+    private UsuarioResponseSimples  usuario;
 
     @JsonProperty("curso")
     private CursoResponse curso;

@@ -55,6 +55,17 @@ public class VagasFacade {
         }
     }
 
+    public List<VagasResponse> getVagasByCurso(Long idCurso){
+        try{
+
+            return vagasMapper.mapVagasModelToVagasResponse(vagasRepository.findByCurso(cursosRepository.findById(idCurso).get()).get());
+
+        }catch (Exception e ){
+
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, MESSAGE_ERROR_FIND.getMessage() + e);
+        }
+    }
+
     public void postVagas(VagasRequestCreate vagasRequestCreate){
         try{
 
