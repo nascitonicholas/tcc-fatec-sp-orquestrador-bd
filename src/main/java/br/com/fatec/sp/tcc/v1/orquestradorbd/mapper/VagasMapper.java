@@ -17,6 +17,10 @@ import java.util.stream.Collectors;
 @Mapper(imports = {Utils.class})
 public interface VagasMapper {
 
+    @Mappings({
+            @Mapping(source = "vagasModel.usuario", target = "usuario"),
+
+    })
     VagasResponse mapVagasModelToVagasResponse(VagasModel vagasModel);
 
     @Named("mapVagasModelToVagasResponse")

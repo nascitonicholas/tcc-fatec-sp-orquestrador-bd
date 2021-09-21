@@ -42,6 +42,14 @@ public class VagasController implements AbstractController<SaidaDefault> {
 
     }
 
+    @GetMapping("/cursos/{idCurso}")
+    public ResponseEntity<?> getVagasByCurso(@PathVariable Long idCurso){
+
+        List<VagasResponse> vagasByCurso = vagasFacade.getVagasByCurso(idCurso);
+
+        return saidaSimplificada(SaidaDefault.builder().responseBody(vagasByCurso).message(MESSAGE_SUCESSO_LISTA.getMessage()).build(), HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<?> postVagas(@RequestBody @Validated VagasRequestCreate vagasRequestCreate){
 
