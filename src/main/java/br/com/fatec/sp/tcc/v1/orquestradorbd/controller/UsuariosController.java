@@ -7,7 +7,6 @@ import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.UsuarioRequestUp
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.UsuariosRequestCreate;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.response.UsuarioResponse;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.facade.UsuariosFacade;
-import br.com.fatec.sp.tcc.v1.orquestradorbd.enums.MensagensEnum.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +24,7 @@ public class UsuariosController implements AbstractController<SaidaDefault> {
     @Autowired
     private UsuariosFacade usuariosFacade;
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<?> getUsuarios(){
 
         List<UsuarioResponse> usuarios = usuariosFacade.getUsuarios();
@@ -40,6 +39,14 @@ public class UsuariosController implements AbstractController<SaidaDefault> {
 
         return saidaSimplificada(SaidaDefault.builder().responseBody(usuario).message(MESSAGE_SUCESSO_ID.getMessage()).build(), HttpStatus.OK);
 
+    }
+
+    @GetMapping
+    public ResponseEntity<?> getUsuarioByEmail(@RequestParam String email){
+
+        UsuarioResponse usuarioByEmail = usuariosFacade.getUsuarioByEmail(email);
+
+        return saidaSimplificada(SaidaDefault.builder().responseBody(usuarioByEmail).message(MESSAGE_SUCESSO_ID.getMessage()).build(), HttpStatus.OK);
     }
 
     @PostMapping
