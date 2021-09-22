@@ -11,7 +11,7 @@
     </parent>
     <groupId>br.com.fatec.sp.tcc.v1</groupId>
     <artifactId>orquestrador-bd</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
     <name>orquestrador-bd</name>
     <description>Projeto Spring Boot para orquestração de BD.</description>
 
