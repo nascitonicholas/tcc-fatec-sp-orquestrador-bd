@@ -33,6 +33,10 @@ public class UsuariosRequestCreate {
         @JsonProperty("email")
         private String email;
 
+        @NotBlank(message = "Senha deve ser informada")
+        @JsonProperty("senha")
+        private String senha;
+
         @NotBlank(message = "CPF deve ser informado")
         @JsonProperty("cpf")
         private String cpf;

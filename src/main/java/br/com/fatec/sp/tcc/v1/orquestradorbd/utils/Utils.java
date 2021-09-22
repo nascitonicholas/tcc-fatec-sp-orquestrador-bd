@@ -1,17 +1,24 @@
 package br.com.fatec.sp.tcc.v1.orquestradorbd.utils;
 
 
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Base64;
 import java.util.Random;
 
 public class Utils {
 
 
     private static final String formation = "yyyy/MM/dd HH:mm:ss";
-	private static final String formationInputData = "yyyy-MM-dd HH:mm:ss";
-	private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern(formation);
-	private static DateTimeFormatter formatterInput = DateTimeFormatter.ofPattern(formationInputData);
+    private static final String formationInputData = "yyyy-MM-dd HH:mm:ss";
+    private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern(formation);
+    private static DateTimeFormatter formatterInput = DateTimeFormatter.ofPattern(formationInputData);
 
     public static String uppercase(String value) {
         return value.toUpperCase();
@@ -23,8 +30,8 @@ public class Utils {
     }
 
     public static String fortacaoData(String dataString) {
-        LocalDateTime data = LocalDateTime.parse(dataString,formatterInput);
-		return data.format(formatter);
+        LocalDateTime data = LocalDateTime.parse(dataString, formatterInput);
+        return data.format(formatter);
     }
 
     public static String isNotNullOrEmpty(String entrada, String atual) {
@@ -41,7 +48,7 @@ public class Utils {
     }
 
 
-    public static String getStringAleatoria(){
+    public static String getStringAleatoria() {
 
         int leftLimit = 48; // numeral '0'
         int rightLimit = 122; // letter 'z'
@@ -56,4 +63,38 @@ public class Utils {
 
         return generatedString;
     }
+
+    public static String encodeSenha(String senha) {
+
+        try {
+
+            MessageDigest algorithm = MessageDigest.getInstance("SHA-256");
+
+            byte messageDigest[] = algorithm.digest(senha.getBytes("UTF-8"));
+
+            StringBuilder hexSenha = new StringBuilder();
+            for (byte b : messageDigest) {
+                hexSenha.append(String.format("%02X", 0xFF & b));
+            }
+
+            return hexSenha.toString();
+
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public static String verificarSenha(String senhaPassado, String senhaPresente, String senhaFuturo) {
+
+        String senhaAntiga = encodeSenha(senhaPassado);
+
+        if (senhaAntiga.equals(senhaPresente)) {
+
+            return encodeSenha(senhaFuturo);
+        } else {
+
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "As senhas diferem");
+        }
+    }
+
 }

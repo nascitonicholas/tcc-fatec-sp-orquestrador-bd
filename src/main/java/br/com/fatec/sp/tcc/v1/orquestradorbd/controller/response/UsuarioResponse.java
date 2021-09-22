@@ -18,6 +18,8 @@ public class UsuarioResponse {
     private String nome;
     @JsonProperty("email")
     private String email;
+    @JsonProperty("senha")
+    private String senha;
     @JsonProperty("cpf")
     private String cpf;
     @JsonProperty("rg")

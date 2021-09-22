@@ -62,6 +62,16 @@ public class UsuariosFacade {
         }
     }
 
+    public UsuarioResponse getUsuarioByEmail(String email){
+        try{
+            return usuarioMapper.mapUsuarioModelToUsuarioResponse(usuariosRepository.findByEmail(email).get());
+
+        }catch (Exception e){
+
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, MESSAGE_ERROR_FIND.getMessage() + e);
+        }
+    }
+
     public void postUsuarios(UsuariosRequestCreate usuariosRequestCreate) {
         try {
             usuariosRequestCreate.getRequest().stream().forEach(item -> {

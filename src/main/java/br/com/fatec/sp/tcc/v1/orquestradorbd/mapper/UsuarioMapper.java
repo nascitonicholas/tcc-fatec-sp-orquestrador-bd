@@ -34,6 +34,7 @@ public interface UsuarioMapper {
             @Mapping(target = "dataCriacao", expression = "java(Utils.dataAtualFormatada())"),
             @Mapping(target = "nome", expression = "java(Utils.uppercase(requestCreate.getNome()))"),
             @Mapping(target = "email", expression = "java(Utils.uppercase(requestCreate.getEmail()))"),
+            @Mapping(target = "senha", expression = "java(Utils.encodeSenha(requestCreate.getSenha()))")
     })
     UsuariosModel mapCreateUsuarioRequestToUsuarioModel(RequestCreate requestCreate );
 
@@ -42,6 +43,7 @@ public interface UsuarioMapper {
             @Mapping(source = "usuariosModel.id", target = "id"),
             @Mapping(target = "nome", expression = "java(Utils.isNotNullOrEmpty(requestUpdate.getNome(),usuariosModel.getNome()))"),
             @Mapping(target = "email", expression = "java(Utils.isNotNullOrEmpty(requestUpdate.getEmail(),usuariosModel.getEmail()))"),
+            @Mapping(target = "senha", expression = "java(Utils.verificarSenha(requestUpdate.getSenhaAtual(),usuariosModel.getSenha(), requestUpdate.getNovaSenha()))"),
             @Mapping(target = "cpf", expression = "java(Utils.isNotNullOrEmpty(requestUpdate.getCpf(),usuariosModel.getCpf()))"),
             @Mapping(target = "rg", expression = "java(Utils.isNotNullOrEmpty(requestUpdate.getRg(),usuariosModel.getRg()))"),
             @Mapping(target = "certificadoMilitar", expression = "java(Utils.isNotNullOrEmpty(requestUpdate.getCertificadoMilitar(),usuariosModel.getCertificadoMilitar()))"),

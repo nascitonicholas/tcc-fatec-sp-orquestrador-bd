@@ -33,6 +33,12 @@ public class UsuarioRequestUpdate {
         @JsonProperty("email")
         private String email;
 
+        @JsonProperty("senha_atual")
+        private String senhaAtual;
+
+        @JsonProperty("nova_senha")
+        private String novaSenha;
+
         @JsonProperty("cpf")
         private String cpf;
 
