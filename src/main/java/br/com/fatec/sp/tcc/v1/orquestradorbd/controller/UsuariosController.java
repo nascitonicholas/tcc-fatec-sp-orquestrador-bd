@@ -3,6 +3,7 @@ package br.com.fatec.sp.tcc.v1.orquestradorbd.controller;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.config.AbstractController;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.config.SaidaDefault;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.UsuarioRequestDelete;
+import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.UsuarioRequestFind;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.UsuarioRequestUpdate;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.UsuariosRequestCreate;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.response.UsuarioResponse;
@@ -42,9 +43,9 @@ public class UsuariosController implements AbstractController<SaidaDefault> {
     }
 
     @GetMapping
-    public ResponseEntity<?> getUsuarioByEmail(@RequestParam String email){
+    public ResponseEntity<?> getUsuarioByEmail(@RequestBody UsuarioRequestFind request){
 
-        UsuarioResponse usuarioByEmail = usuariosFacade.getUsuarioByEmail(email);
+        UsuarioResponse usuarioByEmail = usuariosFacade.getUsuarioByEmail(request.getEmail());
 
         return saidaSimplificada(SaidaDefault.builder().responseBody(usuarioByEmail).message(MESSAGE_SUCESSO_ID.getMessage()).build(), HttpStatus.OK);
     }
