@@ -25,6 +25,10 @@ public class UsuariosRequestCreate {
     @AllArgsConstructor
     public static class RequestCreate{
 
+        @NotNull(message = "Número da matrícula deve ser informado")
+        @JsonProperty("nrMatricula")
+        private Long nrMatricula;
+
         @NotBlank(message = "Nome deve ser informado")
         @JsonProperty("nome")
         private String nome;

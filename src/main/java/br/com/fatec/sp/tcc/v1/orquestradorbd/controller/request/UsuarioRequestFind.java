@@ -1,5 +1,6 @@
 package br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request;
 
+import br.com.fatec.sp.tcc.v1.orquestradorbd.utils.Utils;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,9 +13,16 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 public class UsuarioRequestFind {
 
-    @NotBlank(message = "Email deve ser informado")
-    @JsonProperty("email")
-    private String email;
+    @NotBlank(message = "Número de Matricula deve ser informado")
+    @JsonProperty("nrMatricula")
+    private String nrMatricula;
+    @JsonProperty("senha")
+    private String senha;
+
+
+    public String getSenhaEncriptada(){
+        return this.senha = Utils.encodeSenha(this.senha);
+    }
 
 
 }

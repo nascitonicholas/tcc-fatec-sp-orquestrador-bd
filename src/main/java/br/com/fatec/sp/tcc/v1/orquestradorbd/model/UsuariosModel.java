@@ -14,9 +14,8 @@ import java.util.List;
 public class UsuariosModel {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_usuario")
-    private Long id;
+    @Column(name = "nr_matricula")
+    private Long nrMatricula;
     @Column(name = "nome")
     private String nome;
     @Column(name = "email")
