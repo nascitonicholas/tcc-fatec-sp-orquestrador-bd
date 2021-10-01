@@ -31,6 +31,7 @@ public interface UsuarioMapper {
     }
 
     @Mappings({
+//            @Mapping(target = "nrMatricula", expression = "requestcreate.getNrMatricula()"),
             @Mapping(target = "dataCriacao", expression = "java(Utils.dataAtualFormatada())"),
             @Mapping(target = "nome", expression = "java(Utils.uppercase(requestCreate.getNome()))"),
             @Mapping(target = "email", expression = "java(Utils.uppercase(requestCreate.getEmail()))"),
@@ -40,7 +41,7 @@ public interface UsuarioMapper {
 
 
     @Mappings({
-            @Mapping(source = "usuariosModel.id", target = "id"),
+            @Mapping(source = "usuariosModel.nrMatricula", target = "nrMatricula"),
             @Mapping(target = "nome", expression = "java(Utils.isNotNullOrEmpty(requestUpdate.getNome(),usuariosModel.getNome()))"),
             @Mapping(target = "email", expression = "java(Utils.isNotNullOrEmpty(requestUpdate.getEmail(),usuariosModel.getEmail()))"),
             @Mapping(target = "senha", expression = "java(Utils.verificarSenha(requestUpdate.getSenhaAtual(),usuariosModel.getSenha(), requestUpdate.getNovaSenha()))"),

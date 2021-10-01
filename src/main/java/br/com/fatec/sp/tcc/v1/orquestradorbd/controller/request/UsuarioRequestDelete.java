@@ -23,8 +23,8 @@ public class UsuarioRequestDelete {
     @Data
     public static class RequestDelete{
 
-        @JsonProperty("id_usuario")
-        @NotNull(message = "ID deve ser informado")
-        private Long id;
+        @NotNull(message = "Número da matrícula deve ser informado")
+        @JsonProperty("nrMatricula")
+        private Long nrMatricula;
     }
 }

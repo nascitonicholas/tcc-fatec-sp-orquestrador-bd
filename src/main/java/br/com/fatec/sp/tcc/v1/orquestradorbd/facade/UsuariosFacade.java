@@ -1,6 +1,7 @@
 package br.com.fatec.sp.tcc.v1.orquestradorbd.facade;
 
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.UsuarioRequestDelete;
+import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.UsuarioRequestFind;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.UsuarioRequestUpdate;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.UsuariosRequestCreate;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.response.UsuarioResponse;
@@ -26,6 +27,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 import static br.com.fatec.sp.tcc.v1.orquestradorbd.enums.MensagensErrorEnum.*;
 
@@ -51,22 +53,12 @@ public class UsuariosFacade {
         return usuarioMapper.mapUsuariosModelToUsuariosResponse(usuariosRepository.findAll());
     }
 
-    public UsuarioResponse getUsuarioById(Long id) {
+    public UsuarioResponse getUsuarioByNrMatricula(Long nrMatricula) {
         try {
 
-            return usuarioMapper.mapUsuarioModelToUsuarioResponse(usuariosRepository.findById(id).get());
+            return usuarioMapper.mapUsuarioModelToUsuarioResponse(usuariosRepository.findByNrMatricula(nrMatricula).get());
 
         } catch (Exception e) {
-
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, MESSAGE_ERROR_FIND.getMessage() + e);
-        }
-    }
-
-    public UsuarioResponse getUsuarioByEmail(String email){
-        try{
-            return usuarioMapper.mapUsuarioModelToUsuarioResponse(usuariosRepository.findByEmail(email).get());
-
-        }catch (Exception e){
 
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, MESSAGE_ERROR_FIND.getMessage() + e);
         }
@@ -91,10 +83,22 @@ public class UsuariosFacade {
         }
     }
 
+    public UsuarioResponse getUsuarioByNrMatriculaAndSenha(UsuarioRequestFind requestFind) {
+
+        try {
+
+            return usuarioMapper.mapUsuarioModelToUsuarioResponse(usuariosRepository.findByNrMatriculaAndSenha(Long.parseLong(requestFind.getNrMatricula()), requestFind.getSenhaEncriptada()).get());
+
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, MESSAGE_ERROR_FIND.getMessage() + e);
+        }
+
+    }
+
     public void putUsuarios(UsuarioRequestUpdate usuarioRequestUpdate) {
         try {
             usuarioRequestUpdate.getRequest().forEach(item -> {
-                Optional<UsuariosModel> usuario = usuariosRepository.findById(item.getIdUsuario());
+                Optional<UsuariosModel> usuario = usuariosRepository.findByNrMatricula(item.getNrMatricula());
 
                 if (usuario.isPresent()) {
                     UsuariosModel usuariosModel = usuarioMapper.mapUpdateUsuarioRequestToUsuarioModel(item, usuario.get());
@@ -113,7 +117,7 @@ public class UsuariosFacade {
     public void deleteUsuarios(UsuarioRequestDelete usuarioRequestDelete) {
         try {
             usuarioRequestDelete.getRequest().forEach(item -> {
-                usuariosRepository.deleteById(item.getId());
+                usuariosRepository.deleteById(item.getNrMatricula());
             });
 
         } catch (Exception e) {
@@ -165,4 +169,6 @@ public class UsuariosFacade {
 
         return usuariosRepository.findByCpf(cpf).isEmpty();
     }
+
+
 }

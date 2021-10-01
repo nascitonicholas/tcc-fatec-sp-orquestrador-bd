@@ -12,8 +12,8 @@ import java.util.List;
 @Data
 public class UsuarioResponse {
 
-    @JsonProperty("id")
-    private Long id;
+    @JsonProperty("nrMatricula")
+    private String nrMatricula;
     @JsonProperty("nome")
     private String nome;
     @JsonProperty("email")

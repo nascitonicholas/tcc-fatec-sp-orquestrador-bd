@@ -23,9 +23,9 @@ public class UsuarioRequestUpdate {
     @AllArgsConstructor
     public static class RequestUpdate{
 
-        @NotNull(message = "Id do usuário deve ser informado")
-        @JsonProperty("id_usuario")
-        private Long idUsuario;
+        @NotNull(message = "Número da matrícula deve ser informado")
+        @JsonProperty("nrMatricula")
+        private Long nrMatricula;
 
         @JsonProperty("nome")
         private String nome;

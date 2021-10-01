@@ -15,6 +15,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import static br.com.fatec.sp.tcc.v1.orquestradorbd.enums.MensagensEnum.*;
 
@@ -33,21 +34,22 @@ public class UsuariosController implements AbstractController<SaidaDefault> {
         return saidaSimplificada(SaidaDefault.builder().responseBody(usuarios).message(MESSAGE_SUCESSO_LISTA.getMessage()).build(), HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> getUsuariosById(@PathVariable Long id){
+    @GetMapping("/{nrMatricula}")
+    public ResponseEntity<?> getUsuarioByNrMatricula(@PathVariable Long nrMatricula){
 
-        UsuarioResponse usuario = usuariosFacade.getUsuarioById(id);
+        UsuarioResponse usuario = usuariosFacade.getUsuarioByNrMatricula(nrMatricula);
 
         return saidaSimplificada(SaidaDefault.builder().responseBody(usuario).message(MESSAGE_SUCESSO_ID.getMessage()).build(), HttpStatus.OK);
 
     }
 
-    @GetMapping
-    public ResponseEntity<?> getUsuarioByEmail(@RequestBody UsuarioRequestFind request){
+    @PostMapping("/{login}")
+    public ResponseEntity<?> postUsuarioByNrMatriculaAndSenha(@RequestBody UsuarioRequestFind requestFind){
 
-        UsuarioResponse usuarioByEmail = usuariosFacade.getUsuarioByEmail(request.getEmail());
+        UsuarioResponse usuarioResponse = usuariosFacade.getUsuarioByNrMatriculaAndSenha(requestFind);
 
-        return saidaSimplificada(SaidaDefault.builder().responseBody(usuarioByEmail).message(MESSAGE_SUCESSO_ID.getMessage()).build(), HttpStatus.OK);
+        return saidaSimplificada(SaidaDefault.builder().responseBody(usuarioResponse).message(MESSAGE_SUCESSO_ID.getMessage()).build(), HttpStatus.OK);
+
     }
 
     @PostMapping
