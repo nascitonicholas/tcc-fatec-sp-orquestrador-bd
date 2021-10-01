@@ -87,7 +87,7 @@ public class UsuariosFacade {
 
         try {
 
-            return usuarioMapper.mapUsuarioModelToUsuarioResponse(usuariosRepository.findByNrMatriculaAndSenha(requestFind.getNrMatricula(), requestFind.getSenhaEncriptada()).get());
+            return usuarioMapper.mapUsuarioModelToUsuarioResponse(usuariosRepository.findByNrMatriculaAndSenha(Long.parseLong(requestFind.getNrMatricula()), requestFind.getSenhaEncriptada()).get());
 
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, MESSAGE_ERROR_FIND.getMessage() + e);

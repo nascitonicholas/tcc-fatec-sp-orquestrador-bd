@@ -13,6 +13,6 @@ public interface UsuariosRepository extends JpaRepository<UsuariosModel,Long> {
     Optional<UsuariosModel> findByNome(String nome);
     Optional<UsuariosModel> findByCpf(String cpf);
     Optional<UsuariosModel> findByEmail(String email);
-    Optional<UsuariosModel> findByNrMatriculaAndSenha(String nrMatricula, String senha);
+    Optional<UsuariosModel> findByNrMatriculaAndSenha(Long nrMatricula, String senha);
 
 }
