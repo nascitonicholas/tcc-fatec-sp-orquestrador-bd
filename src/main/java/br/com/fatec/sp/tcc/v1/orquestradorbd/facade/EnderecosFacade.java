@@ -3,6 +3,8 @@ package br.com.fatec.sp.tcc.v1.orquestradorbd.facade;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.EnderecoRequestDelete;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.EnderecoRequestUpdate;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.EnderecosRequestCreate;
+import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.response.EnderecoCreateUpdateResponse;
+import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.response.EnderecoCreateUpdateResponse.*;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.response.EnderecoResponse;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.mapper.EnderecosMapper;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.model.EnderecosModel;
@@ -13,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,14 +49,21 @@ public class EnderecosFacade {
         }
     }
 
-    public void postEnderecos(EnderecosRequestCreate enderecosRequestCreate){
+    public List<EnderecoCreateUpdateResponse> postEnderecos(EnderecosRequestCreate enderecosRequestCreate){
+
+        List<EnderecoCreateUpdateResponse> response = new ArrayList<>();
+
         try{
             enderecosRequestCreate.getRequest().forEach(item -> {
                 if(enderecoInexistente(item.getCep())){
 
-                    enderecosRepository.save(enderecosMapper.mapCreateEnderecosRequestToEnderecoModel(item));
+                    EnderecosModel endereco = enderecosRepository.save(enderecosMapper.mapCreateEnderecosRequestToEnderecoModel(item));
+                    response.add(enderecosMapper.mapEnderecoModelIdToEnderecoResponseId(endereco.getId()));
                 }
             });
+
+
+            return response;
 
         }catch (Exception e){
 
@@ -61,15 +71,22 @@ public class EnderecosFacade {
         }
     }
 
-    public void putEndereco(EnderecoRequestUpdate enderecoRequestUpdate){
+    public  List<EnderecoCreateUpdateResponse> putEndereco(EnderecoRequestUpdate enderecoRequestUpdate){
+
+        List<EnderecoCreateUpdateResponse> response = new ArrayList<>();
+
         try{
             enderecoRequestUpdate.getRequest().forEach(item ->{
                 Optional<EnderecosModel> endereco = enderecosRepository.findById(item.getId());
                 if(endereco.isPresent()){
                     EnderecosModel enderecosModel = enderecosMapper.mapUpdateEnderecoRequestToEnderecoModel(item, endereco.get());
                     enderecosRepository.save(enderecosModel);
+                    response.add(enderecosMapper.mapEnderecoModelIdToEnderecoResponseId(enderecosModel.getId()));
                 }
             });
+
+            return response;
+
         }catch (Exception e){
 
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, MESSAGE_ERROR_UPDATE.getMessage() + e);

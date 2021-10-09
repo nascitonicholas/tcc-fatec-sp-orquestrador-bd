@@ -5,6 +5,7 @@ import br.com.fatec.sp.tcc.v1.orquestradorbd.config.SaidaDefault;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.EnderecoRequestDelete;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.EnderecoRequestUpdate;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.EnderecosRequestCreate;
+import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.response.EnderecoCreateUpdateResponse;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.response.EnderecoResponse;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.facade.EnderecosFacade;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,16 +45,17 @@ public class EnderecosController  implements AbstractController<SaidaDefault> {
     @PostMapping
     public ResponseEntity<?> postEnderecos(@RequestBody @Validated EnderecosRequestCreate enderecosRequestCreate) {
 
-        enderecosFacade.postEnderecos(enderecosRequestCreate);
+        List<EnderecoCreateUpdateResponse> response = enderecosFacade.postEnderecos(enderecosRequestCreate);
 
-        return saidaSimplificada(SaidaDefault.builder().message(MESSAGE_SUCESSO_CRIACAO.getMessage()).build(), HttpStatus.CREATED);
+        return saidaSimplificada(SaidaDefault.builder().responseBody(response).message(MESSAGE_SUCESSO_CRIACAO.getMessage()).build(), HttpStatus.CREATED);
     }
 
     @PutMapping
     public ResponseEntity<?> putEnderecos(@RequestBody @Validated EnderecoRequestUpdate enderecoRequestUpdate){
-        enderecosFacade.putEndereco(enderecoRequestUpdate);
 
-        return saidaSimplificada(SaidaDefault.builder().message(MESSAGE_SUCESSO_ATUALIZACAO.getMessage()).build(), HttpStatus.OK);
+        List<EnderecoCreateUpdateResponse> response = enderecosFacade.putEndereco(enderecoRequestUpdate);
+
+        return saidaSimplificada(SaidaDefault.builder().responseBody(response).message(MESSAGE_SUCESSO_ATUALIZACAO.getMessage()).build(), HttpStatus.OK);
     }
 
     @DeleteMapping

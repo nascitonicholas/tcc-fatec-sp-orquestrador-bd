@@ -3,6 +3,7 @@ package br.com.fatec.sp.tcc.v1.orquestradorbd.facade;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.CursoRequestDelete;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.CursosRequestCreate;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.CursosRequestUpdate;
+import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.response.CursoCreateUpdateResponse;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.response.CursoResponse;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.mapper.CursosMapper;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.model.CursosModel;
@@ -13,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,16 +47,22 @@ public class CursosFacade {
         }
     }
 
-    public void postCursos(CursosRequestCreate cursosRequestCreates) {
+    public List<CursoCreateUpdateResponse> postCursos(CursosRequestCreate cursosRequestCreates) {
+
+        List<CursoCreateUpdateResponse> response = new ArrayList<>();
 
         try {
             cursosRequestCreates.getRequest().forEach(item -> {
                 if (cursoInexistente(item.getNome())) {
                     CursosModel model = cursosMapper.mapCreateCursosRequestToCursosModel(item);
 
-                    cursoRepository.save(model);
+                    CursosModel cursoModel = cursoRepository.save(model);
+                    response.add(cursosMapper.mapIdCursoModelToIdCursoResponse(cursoModel.getId()));
                 }
             });
+
+            return response;
+
         } catch (Exception e) {
 
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, MESSAGE_ERROR_CREATE.getMessage() + e);
@@ -68,7 +76,9 @@ public class CursosFacade {
 
 
 
-    public void putCursos(CursosRequestUpdate cursosRequestUpdate) {
+    public  List<CursoCreateUpdateResponse> putCursos(CursosRequestUpdate cursosRequestUpdate) {
+
+        List<CursoCreateUpdateResponse> response = new ArrayList<>();
 
         try{
             cursosRequestUpdate.getRequest().forEach(item -> {
@@ -76,9 +86,12 @@ public class CursosFacade {
                 if(curso.isPresent()){
                     CursosModel cursoModel = cursosMapper.mapUpdateCursosRequestToCursosModel(item, curso.get());
                     cursoRepository.save(cursoModel);
+                    response.add(cursosMapper.mapIdCursoModelToIdCursoResponse(cursoModel.getId()));
                 }
 
             });
+
+            return response;
 
         }catch (Exception e){
 
@@ -99,8 +112,6 @@ public class CursosFacade {
 
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, MESSAGE_ERROR_DELETE.getMessage() + e);
         }
-
-
 
     }
 

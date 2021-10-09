@@ -2,6 +2,7 @@ package br.com.fatec.sp.tcc.v1.orquestradorbd.mapper;
 
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.CursosRequestUpdate;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.CursosRequestCreate;
+import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.response.CursoCreateUpdateResponse;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.response.CursoResponse;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.model.CursosModel;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.utils.Utils;
@@ -50,5 +51,7 @@ public interface CursosMapper {
     })
     CursosModel mapUpdateCursosRequestToCursosModel(RequestUpdate request, CursosModel cursosModel);
 
+
+    CursoCreateUpdateResponse mapIdCursoModelToIdCursoResponse(Long id);
 
 }
