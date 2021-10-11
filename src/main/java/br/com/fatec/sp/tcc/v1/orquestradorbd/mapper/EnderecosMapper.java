@@ -1,5 +1,7 @@
 package br.com.fatec.sp.tcc.v1.orquestradorbd.mapper;
 
+import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.response.EnderecoCreateUpdateResponse;
+import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.response.EnderecoCreateUpdateResponse.*;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.response.EnderecoResponse;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.model.EnderecosModel;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.utils.Utils;
@@ -58,4 +60,7 @@ public interface EnderecosMapper {
 
     })
     EnderecosModel mapUpdateEnderecoRequestToEnderecoModel(RequestUpdate requestUpdate, EnderecosModel enderecosModel);
+
+    EnderecoCreateUpdateResponse mapEnderecoModelIdToEnderecoResponseId(Long id);
+
 }

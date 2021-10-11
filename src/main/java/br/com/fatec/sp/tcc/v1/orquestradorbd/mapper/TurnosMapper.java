@@ -2,6 +2,7 @@ package br.com.fatec.sp.tcc.v1.orquestradorbd.mapper;
 
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.TurnoRequestCreate;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.TurnoRequestUpdate;
+import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.response.TurnoCreateUpdateResponse;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.response.TurnosResponse;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.model.TurnosModel;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.utils.Utils;
@@ -43,4 +44,7 @@ public interface TurnosMapper {
             @Mapping(target = "dataUltimaAlteracao", expression = "java(Utils.dataAtualFormatada())")
     })
     TurnosModel mapUpdateTurnoRequestToTurnoModel(RequestUpdate requestUpdate, TurnosModel turnosModel);
+
+    TurnoCreateUpdateResponse mapTurnoModelIdToTurnoIdResponse(Long id);
+
 }

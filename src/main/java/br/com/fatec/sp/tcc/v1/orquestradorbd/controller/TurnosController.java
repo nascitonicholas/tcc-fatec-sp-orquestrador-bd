@@ -5,6 +5,7 @@ import br.com.fatec.sp.tcc.v1.orquestradorbd.config.SaidaDefault;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.TurnoRequestCreate;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.TurnoRequestDelete;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.TurnoRequestUpdate;
+import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.response.TurnoCreateUpdateResponse;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.response.TurnosResponse;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.facade.TurnosFacade;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,17 +44,17 @@ public class TurnosController implements AbstractController<SaidaDefault> {
     @PostMapping
     public ResponseEntity<?> postTurnos(@RequestBody @Validated TurnoRequestCreate turnoRequestCreate){
 
-        turnosFacade.postTurnos(turnoRequestCreate);
+        List<TurnoCreateUpdateResponse> responses = turnosFacade.postTurnos(turnoRequestCreate);
 
-        return saidaSimplificada(SaidaDefault.builder().message(MESSAGE_SUCESSO_CRIACAO.getMessage()).build(), HttpStatus.CREATED);
+        return saidaSimplificada(SaidaDefault.builder().responseBody(responses).message(MESSAGE_SUCESSO_CRIACAO.getMessage()).build(), HttpStatus.CREATED);
     }
 
     @PutMapping
     public ResponseEntity<?> putTurnos(@RequestBody @Validated TurnoRequestUpdate turnoRequestUpdate){
 
-        turnosFacade.putTurnos(turnoRequestUpdate);
+        List<TurnoCreateUpdateResponse> responses = turnosFacade.putTurnos(turnoRequestUpdate);
 
-        return saidaSimplificada(SaidaDefault.builder().message(MESSAGE_SUCESSO_ATUALIZACAO.getMessage()).build(), HttpStatus.CREATED);
+        return saidaSimplificada(SaidaDefault.builder().responseBody(responses).message(MESSAGE_SUCESSO_ATUALIZACAO.getMessage()).build(), HttpStatus.CREATED);
     }
 
     @DeleteMapping

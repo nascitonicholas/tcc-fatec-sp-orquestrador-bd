@@ -5,6 +5,7 @@ import br.com.fatec.sp.tcc.v1.orquestradorbd.config.SaidaDefault;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.CursoRequestDelete;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.CursosRequestCreate;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.CursosRequestUpdate;
+import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.response.CursoCreateUpdateResponse;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.response.CursoResponse;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.facade.CursosFacade;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,9 +38,9 @@ public class CursosController implements AbstractController<SaidaDefault> {
     @PostMapping
     public ResponseEntity<?> postCursos(@RequestBody @Validated CursosRequestCreate cursosRequestCreates){
 
-        cursosFacade.postCursos(cursosRequestCreates);
+        List<CursoCreateUpdateResponse> responses = cursosFacade.postCursos(cursosRequestCreates);
 
-        return saidaSimplificada(SaidaDefault.builder().message(MESSAGE_SUCESSO_CRIACAO.getMessage()).build(), HttpStatus.CREATED);
+        return saidaSimplificada(SaidaDefault.builder().responseBody(responses).message(MESSAGE_SUCESSO_CRIACAO.getMessage()).build(), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
@@ -54,9 +55,9 @@ public class CursosController implements AbstractController<SaidaDefault> {
     @PutMapping
     public ResponseEntity<?> putCursos(@RequestBody @Validated CursosRequestUpdate cursosRequestUpdate){
 
-        cursosFacade.putCursos(cursosRequestUpdate);
+        List<CursoCreateUpdateResponse> responses = cursosFacade.putCursos(cursosRequestUpdate);
 
-        return saidaSimplificada(SaidaDefault.builder().message(MESSAGE_SUCESSO_ATUALIZACAO.getMessage()).build(), HttpStatus.OK);
+        return saidaSimplificada(SaidaDefault.builder().responseBody(responses).message(MESSAGE_SUCESSO_ATUALIZACAO.getMessage()).build(), HttpStatus.OK);
     }
 
     @DeleteMapping
