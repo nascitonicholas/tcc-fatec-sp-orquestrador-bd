@@ -1,5 +1,6 @@
 package br.com.fatec.sp.tcc.v1.orquestradorbd.controller.response;
 
+import br.com.fatec.sp.tcc.v1.orquestradorbd.enums.TipoEnderecoEnum;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,6 +13,8 @@ public class EnderecoResponse {
 
     @JsonProperty("id")
     private Long id;
+    @JsonProperty("tipo_endereco")
+    private TipoEnderecoEnum tipoEndereco;
     @JsonProperty("logradouro")
     private String logradouro;
     @JsonProperty("numero")

@@ -3,6 +3,7 @@ package br.com.fatec.sp.tcc.v1.orquestradorbd.mapper;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.response.EnderecoCreateUpdateResponse;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.response.EnderecoCreateUpdateResponse.*;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.response.EnderecoResponse;
+import br.com.fatec.sp.tcc.v1.orquestradorbd.enums.TipoEnderecoEnum;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.model.EnderecosModel;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.utils.Utils;
 import org.mapstruct.Mapper;
@@ -17,7 +18,7 @@ import java.util.Objects;
 import static br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.EnderecoRequestUpdate.RequestUpdate;
 import static br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.EnderecosRequestCreate.RequestCreate;
 
-@Mapper(imports = {Utils.class})
+@Mapper(imports = {Utils.class, TipoEnderecoEnum.class})
 public interface EnderecosMapper {
 
     @Named("mapEnderecosModelToEnderecosResponse")
@@ -37,6 +38,7 @@ public interface EnderecosMapper {
     EnderecoResponse mapEnderecoModelToEnderecoResponse(EnderecosModel enderecosModel);
 
     @Mappings({
+            @Mapping(target = "tipoEndereco", expression = "java(TipoEnderecoEnum.valuesOfString(requestCreate.getTipoEndereco()))"),
             @Mapping(target = "logradouro", expression = "java(Utils.uppercase(requestCreate.getLogradouro()))"),
             @Mapping(target = "complemento", expression = "java(Utils.uppercase(requestCreate.getComplemento()))"),
             @Mapping(target = "bairro", expression = "java(Utils.uppercase(requestCreate.getBairro()))"),
@@ -49,6 +51,7 @@ public interface EnderecosMapper {
 
     @Mappings({
             @Mapping(source = "enderecosModel.id", target = "id"),
+            @Mapping(target = "tipoEndereco", expression = "java(TipoEnderecoEnum.valuesOfString(requestUpdate.getTipoEndereco()))"),
             @Mapping(target = "logradouro", expression = "java(Utils.isNotNullOrEmpty(requestUpdate.getLogradouro(),enderecosModel.getLogradouro()))"),
             @Mapping(target = "numero", expression = "java(Utils.isNotNullOrEmpty(requestUpdate.getNumero(),enderecosModel.getNumero()))"),
             @Mapping(target = "complemento", expression = "java(Utils.isNotNullOrEmpty(requestUpdate.getComplemento(),enderecosModel.getComplemento()))"),
