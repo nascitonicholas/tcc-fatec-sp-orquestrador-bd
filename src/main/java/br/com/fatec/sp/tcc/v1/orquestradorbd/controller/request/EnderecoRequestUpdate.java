@@ -27,6 +27,9 @@ public class EnderecoRequestUpdate {
         @NotNull(message = "ID deve ser informado")
         @JsonProperty("id")
         private Long id;
+        @NotBlank(message = "Tipo de endereço deve ser informado")
+        @JsonProperty("tipo_endereco")
+        private String tipoEndereco;
         @NotBlank(message = "Logradouro deve ser informado")
         @JsonProperty("logradouro")
         private String logradouro;

@@ -1,5 +1,6 @@
 package br.com.fatec.sp.tcc.v1.orquestradorbd.model;
 
+import br.com.fatec.sp.tcc.v1.orquestradorbd.enums.TipoEnderecoEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,8 @@ public class EnderecosModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_endereco")
     private Long id;
+    @Column(name = "tipo_endereco")
+    private TipoEnderecoEnum tipoEndereco;
     @Column(name = "logradouro")
     private String logradouro;
     @Column(name = "numero")
