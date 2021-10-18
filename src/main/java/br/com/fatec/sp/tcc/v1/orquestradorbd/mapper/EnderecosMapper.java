@@ -43,7 +43,7 @@ public interface EnderecosMapper {
             @Mapping(target = "complemento", expression = "java(Utils.uppercase(requestCreate.getComplemento()))"),
             @Mapping(target = "bairro", expression = "java(Utils.uppercase(requestCreate.getBairro()))"),
             @Mapping(target = "municipio", expression = "java(Utils.uppercase(requestCreate.getMunicipio()))"),
-            @Mapping(target = "estado", expression = "java(Utils.uppercase(requestCreate.getEstado()))"),
+            //@Mapping(target = "estado", expression = "java(Utils.uppercase(requestCreate.getEstado()))"),
             @Mapping(target = "dataCriacao", expression = "java(Utils.dataAtualFormatada())")
 
     })
@@ -57,7 +57,7 @@ public interface EnderecosMapper {
             @Mapping(target = "complemento", expression = "java(Utils.isNotNullOrEmpty(requestUpdate.getComplemento(),enderecosModel.getComplemento()))"),
             @Mapping(target = "bairro", expression = "java(Utils.isNotNullOrEmpty(requestUpdate.getBairro(),enderecosModel.getBairro()))"),
             @Mapping(target = "municipio", expression = "java(Utils.isNotNullOrEmpty(requestUpdate.getMunicipio(),enderecosModel.getMunicipio()))"),
-            @Mapping(target = "estado", expression = "java(Utils.isNotNullOrEmpty(requestUpdate.getEstado(),enderecosModel.getEstado()))"),
+            //@Mapping(target = "estado", expression = "java(Utils.isNotNullOrEmpty(requestUpdate.getEstado(),enderecosModel.getEstado()))"),
             @Mapping(target = "cep", expression = "java(Utils.isNotNullOrEmpty(requestUpdate.getCep(),enderecosModel.getCep()))"),
             @Mapping(target = "dataUltimaAlteracao", expression = "java(Utils.dataAtualFormatada())")
 

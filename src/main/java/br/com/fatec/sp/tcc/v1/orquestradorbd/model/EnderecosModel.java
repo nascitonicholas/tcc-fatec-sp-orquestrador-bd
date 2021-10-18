@@ -29,8 +29,9 @@ public class EnderecosModel {
     private String bairro;
     @Column(name = "municipio")
     private String municipio;
-    @Column(name = "estado")
-    private String estado;
+    @OneToOne
+    @JoinColumn(name = "id_estado")
+    private EstadosModel estado;
     @Column(name = "cep")
     private String cep;
     @Column(name = "dt_criacao")
