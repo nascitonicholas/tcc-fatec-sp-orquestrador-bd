@@ -45,9 +45,9 @@ public class EnderecoRequestUpdate {
         @NotBlank(message = "Municipio deve ser informado")
         @JsonProperty("municipio")
         private String municipio;
-        @NotBlank(message = "Estado deve ser informado")
-        @JsonProperty("estado")
-        private String estado;
+        @NotNull(message = "Estado deve ser informado")
+        @JsonProperty("id_estado")
+        private Long idEstado;
         @NotBlank(message = "CEP deve ser informado")
         @JsonProperty("cep")
         private String cep;

@@ -2,11 +2,13 @@ package br.com.fatec.sp.tcc.v1.orquestradorbd.controller;
 
 import br.com.fatec.sp.tcc.v1.orquestradorbd.config.AbstractController;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.config.SaidaDefault;
+import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.EnderecoEstadoRequestCreate;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.EnderecoRequestDelete;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.EnderecoRequestUpdate;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.EnderecosRequestCreate;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.response.EnderecoCreateUpdateResponse;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.response.EnderecoResponse;
+import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.response.EstadosResponse;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.facade.EnderecosFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -42,12 +44,28 @@ public class EnderecosController  implements AbstractController<SaidaDefault> {
         return saidaSimplificada(SaidaDefault.builder().responseBody(endereco).message(MESSAGE_SUCESSO_ID.getMessage()).build(), HttpStatus.OK);
     }
 
+    @GetMapping("/estados")
+    public ResponseEntity<?> getEstados(){
+
+        List<EstadosResponse> estados = enderecosFacade.getEstados();
+
+        return saidaSimplificada(SaidaDefault.builder().responseBody(estados).message(MESSAGE_SUCESSO_LISTA.getMessage()).build(), HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<?> postEnderecos(@RequestBody @Validated EnderecosRequestCreate enderecosRequestCreate) {
 
         List<EnderecoCreateUpdateResponse> response = enderecosFacade.postEnderecos(enderecosRequestCreate);
 
         return saidaSimplificada(SaidaDefault.builder().responseBody(response).message(MESSAGE_SUCESSO_CRIACAO.getMessage()).build(), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/estado")
+    public ResponseEntity<?> postEstados(@RequestBody @Validated EnderecoEstadoRequestCreate enderecoEstadoRequestCreate){
+
+        enderecosFacade.postEstados(enderecoEstadoRequestCreate);
+
+        return saidaSimplificada(SaidaDefault.builder().message(MESSAGE_SUCESSO_CRIACAO.getMessage()).build(), HttpStatus.CREATED);
     }
 
     @PutMapping

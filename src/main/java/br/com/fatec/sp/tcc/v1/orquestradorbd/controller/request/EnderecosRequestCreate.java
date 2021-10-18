@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Data
@@ -41,9 +42,9 @@ public class EnderecosRequestCreate {
         @NotBlank(message = "Municipio deve ser informado")
         @JsonProperty("municipio")
         private String municipio;
-        @NotBlank(message = "Estado deve ser informado")
-        @JsonProperty("estado")
-        private String estado;
+        @NotNull(message = "Estado deve ser informado")
+        @JsonProperty("id_estado")
+        private Long idEstado;
         @NotBlank(message = "CEP deve ser informado")
         @JsonProperty("cep")
         private String cep;
