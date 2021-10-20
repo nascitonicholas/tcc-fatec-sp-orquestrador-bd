@@ -16,6 +16,8 @@ import java.util.Objects;
 @Mapper(imports = {Utils.class})
 public interface EstadosMapper {
 
+    EstadosResponse mapEstadoModelToEstadoResponse(EstadosModel estadosModel);
+
     @Named("mapEnderecosModelToEnderecosResponse")
     default List<EstadosResponse> mapEnderecosModelToEnderecosResponse(List<EstadosModel> estadosModel){
 
@@ -37,5 +39,5 @@ public interface EstadosMapper {
     })
     EstadosModel mapEstadoRequestToEstadoModel(EstadoRequest estadoRequest);
 
-    EstadosResponse mapEstadoModelToEstadoResponse(EstadosModel estadosModel);
+
 }

@@ -74,7 +74,10 @@ public class EnderecosFacade {
             enderecosRequestCreate.getRequest().forEach(item -> {
                 if (enderecoInexistente(item.getCep())) {
 
-                    EnderecosModel endereco = enderecosRepository.save(enderecosMapper.mapCreateEnderecosRequestToEnderecoModel(item));
+                    EnderecosModel enderecoEntity = enderecosMapper.mapCreateEnderecosRequestToEnderecoModel(item);
+                    validarEstado(enderecoEntity,item.getIdEstado());
+                    EnderecosModel endereco = enderecosRepository.save(enderecoEntity);
+
                     response.add(enderecosMapper.mapEnderecoModelIdToEnderecoResponseId(endereco.getId()));
                 }
             });
@@ -86,6 +89,20 @@ public class EnderecosFacade {
 
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, MESSAGE_ERROR_CREATE.getMessage() + e);
         }
+    }
+
+    private void validarEstado(EnderecosModel endereco, Long idEstado) {
+
+        Optional<EstadosModel> estado = estadosRepository.findById(idEstado);
+
+        if(estado.isPresent()){
+
+            endereco.setEstado(estado.get());
+        }
+        else{
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, MESSAGE_ERROR_FOREING_KEY.messageErroFk("id_estado"));
+        }
+
     }
 
     public void postEstados(EnderecoEstadoRequestCreate enderecoEstadoRequestCreate) {
