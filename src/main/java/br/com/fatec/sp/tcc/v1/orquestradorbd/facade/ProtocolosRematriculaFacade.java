@@ -75,7 +75,7 @@ public class ProtocolosRematriculaFacade {
                 ProtocolosRematriculaModel protocolosRematriculaModel = protocolosRematriculasMapper.mapCreateProtocoloRematriculaRequestToProtocoloRematriculaModel(item);
                 getCodProtocolo(protocolosRematriculaModel);
                 validarMateria(item.getIdsMateria(), protocolosRematriculaModel);
-                validarUsuario(item.getIdAluno(), protocolosRematriculaModel);
+                validarUsuario(item.getNrMatriculaUsuario(), protocolosRematriculaModel);
                 protocolosRematriculaRepository.save(protocolosRematriculaModel);
             });
 
@@ -101,7 +101,7 @@ public class ProtocolosRematriculaFacade {
                 if (protocolo.isPresent()) {
                     ProtocolosRematriculaModel protocolosRematriculaModel = protocolosRematriculasMapper.mapUpdateProtocoloRematriculaRequestToProtocoloRematriculaModel(item, protocolo.get());
                     validarMateria(item.getIdMateria(), protocolosRematriculaModel);
-                    validarUsuario(item.getIdAluno(), protocolosRematriculaModel);
+                    validarUsuario(item.getNrMatriculaUsuario(), protocolosRematriculaModel);
                     protocolosRematriculaRepository.save(protocolosRematriculaModel);
                 }
             });
@@ -127,14 +127,14 @@ public class ProtocolosRematriculaFacade {
     }
 
 
-    private void validarUsuario(Long idAluno, ProtocolosRematriculaModel protocolosRematriculaModel) {
+    private void validarUsuario(Long nrMatriculaUsuario, ProtocolosRematriculaModel protocolosRematriculaModel) {
 
-        Optional<UsuariosModel> usuarioById = usuariosRepository.findById(idAluno);
+        Optional<UsuariosModel> usuarioById = usuariosRepository.findByNrMatricula(nrMatriculaUsuario);
 
         if (usuarioById.isPresent()) {
             protocolosRematriculaModel.setAluno(usuarioById.get());
         } else {
-            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, MESSAGE_ERROR_FOREING_KEY.messageErroFk("id_usuario"));
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, MESSAGE_ERROR_FOREING_KEY.messageErroFk("nr_matricula_usuario"));
         }
     }
 

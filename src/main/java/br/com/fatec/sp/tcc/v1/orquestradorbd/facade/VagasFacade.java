@@ -74,7 +74,7 @@ public class VagasFacade {
                 validarCurso(item.getIdCurso(), vagasModel);
                 validarTipoVaga(item.getIdTipoVaga(), vagasModel);
                 validarEndereco(item.getIdEnderecoVaga(), vagasModel);
-                validarUsuario(item.getIdUsuario(), vagasModel);
+                validarUsuario(item.getNrMatriculaUsuario(), vagasModel);
                 vagasRepository.save(vagasModel);
 
             });
@@ -96,7 +96,7 @@ public class VagasFacade {
                     VagasModel vagasModel = vagasMapper.mapUpdateVagaRequestToVagaModel(item, vagaModel.get());
                     validarCurso(item.getIdCurso(), vagasModel);
                     validarTipoVaga(item.getIdTipoVaga(), vagasModel);
-                    validarUsuario(item.getIdUsuario(), vagasModel);
+                    validarUsuario(item.getNrMatriculaUsuario(), vagasModel);
                     validarEndereco(item.getIdEnderecoVaga(), vagasModel);
                     vagasRepository.save(vagasModel);
                 }
@@ -158,14 +158,14 @@ public class VagasFacade {
         }
 
     }
-    private void validarUsuario(Long idUsuario, VagasModel vagasModel) {
+    private void validarUsuario(Long nrMatricula, VagasModel vagasModel) {
 
-        Optional<UsuariosModel> usuario = usuariosRepository.findById(idUsuario);
+        Optional<UsuariosModel> usuario = usuariosRepository.findByNrMatricula(nrMatricula);
 
         if(usuario.isPresent()){
             vagasModel.setUsuario(usuario.get());
         }else{
-            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, MESSAGE_ERROR_FOREING_KEY.messageErroFk("id_usuario"));
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, MESSAGE_ERROR_FOREING_KEY.messageErroFk("nr_matricula_usuario"));
         }
     }
 

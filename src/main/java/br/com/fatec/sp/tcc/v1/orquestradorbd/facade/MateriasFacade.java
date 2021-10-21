@@ -99,7 +99,7 @@ public class MateriasFacade {
         List<UsuariosModel> professores = new ArrayList<>();
 
         idProfessores.forEach(item ->{
-            Optional<UsuariosModel> professorById = usuariosRepository.findById(item);
+            Optional<UsuariosModel> professorById = usuariosRepository.findByNrMatricula(item);
             if(professorById.isPresent()){
                 professores.add(professorById.get());
             }else{
