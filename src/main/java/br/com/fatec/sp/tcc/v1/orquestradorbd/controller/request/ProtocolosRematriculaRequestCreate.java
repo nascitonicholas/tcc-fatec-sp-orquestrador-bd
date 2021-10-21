@@ -29,8 +29,8 @@ public class ProtocolosRematriculaRequestCreate {
         private List<Long> idsMateria;
 
         @NotNull(message = "Id do aluno deve ser informado")
-        @JsonProperty("id_aluno")
-        private Long idAluno;
+        @JsonProperty("nr_matricula_usuario")
+        private Long nrMatriculaUsuario;
 
         @NotBlank(message = "Ano/Semestre da Rematricula deve ser informado")
         @JsonProperty("ano_semestre_rematricula")

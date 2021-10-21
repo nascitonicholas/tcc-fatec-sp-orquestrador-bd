@@ -58,7 +58,7 @@ public class HistoricoDisciplinarFacade {
 
             historicoDisciplinarRequestCreate.getRequest().forEach(item -> {
 
-                Optional<UsuariosModel> aluno = usuariosRepository.findById(item.getIdAluno());
+                Optional<UsuariosModel> aluno = usuariosRepository.findById(item.getNrMatriculaUsuario());
                 HistoricoDisciplinarModel historicoDisciplinarModel = historicoDisciplinarMapper.mapHistoricoDisciplinarRequestToHistoricoDisciplinarModel(item);
                 validarUsuario(aluno, historicoDisciplinarModel);
                 validarMateria(item.getIdMateria(), historicoDisciplinarModel);
@@ -117,7 +117,7 @@ public class HistoricoDisciplinarFacade {
         if (aluno.isPresent()) {
             historicoDisciplinarModel.setAluno(aluno.get());
         } else {
-            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, MESSAGE_ERROR_FOREING_KEY.messageErroFk("id_aluno"));
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, MESSAGE_ERROR_FOREING_KEY.messageErroFk("nr_matricula_usuario"));
         }
     }
 }

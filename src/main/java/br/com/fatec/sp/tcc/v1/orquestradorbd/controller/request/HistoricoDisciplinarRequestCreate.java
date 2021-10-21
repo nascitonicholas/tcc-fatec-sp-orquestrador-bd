@@ -25,9 +25,9 @@ public class HistoricoDisciplinarRequestCreate {
     @Data
     public static class HistoricoDisciplinarCreate{
 
-        @NotNull(message = "Id do aluno deve ser informado")
-        @JsonProperty("id_aluno")
-        private Long idAluno;
+        @NotNull(message = "Nr Matricula do aluno deve ser informado")
+        @JsonProperty("nr_matricula_usuario")
+        private Long nrMatriculaUsuario;
         @NotNull(message = "Id da materia deve ser informada")
         @JsonProperty("id_materia")
         private Long idMateria;
