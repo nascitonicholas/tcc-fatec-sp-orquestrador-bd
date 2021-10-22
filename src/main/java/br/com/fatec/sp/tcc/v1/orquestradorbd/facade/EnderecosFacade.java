@@ -39,6 +39,8 @@ public class EnderecosFacade {
 
     private final EstadosMapper estadosMapper = Mappers.getMapper(EstadosMapper.class);
 
+    private EnderecosModel enderecosModel = new EnderecosModel();
+
     public List<EnderecoResponse> getEnderecos() {
 
         List<EnderecosModel> listaEnderecos = enderecosRepository.findAll();
@@ -72,14 +74,13 @@ public class EnderecosFacade {
 
         try {
             enderecosRequestCreate.getRequest().forEach(item -> {
-                if (enderecoInexistente(item.getCep())) {
 
-                    EnderecosModel enderecoEntity = enderecosMapper.mapCreateEnderecosRequestToEnderecoModel(item);
-                    validarEstado(enderecoEntity,item.getIdEstado());
-                    EnderecosModel endereco = enderecosRepository.save(enderecoEntity);
+                this.enderecosModel = enderecosMapper.mapCreateEnderecosRequestToEnderecoModel(item);
+                validarEstado(item.getIdEstado());
+                EnderecosModel endereco = enderecosRepository.save(enderecosModel);
 
-                    response.add(enderecosMapper.mapEnderecoModelIdToEnderecoResponseId(endereco.getId()));
-                }
+                response.add(enderecosMapper.mapEnderecoModelIdToEnderecoResponseId(endereco.getId()));
+
             });
 
 
@@ -91,15 +92,14 @@ public class EnderecosFacade {
         }
     }
 
-    private void validarEstado(EnderecosModel endereco, Long idEstado) {
+    private void validarEstado(Long idEstado) {
 
         Optional<EstadosModel> estado = estadosRepository.findById(idEstado);
 
-        if(estado.isPresent()){
+        if (estado.isPresent()) {
 
-            endereco.setEstado(estado.get());
-        }
-        else{
+            this.enderecosModel.setEstado(estado.get());
+        } else {
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, MESSAGE_ERROR_FOREING_KEY.messageErroFk("id_estado"));
         }
 
@@ -108,7 +108,7 @@ public class EnderecosFacade {
     public void postEstados(EnderecoEstadoRequestCreate enderecoEstadoRequestCreate) {
 
         try {
-            enderecoEstadoRequestCreate.getRequest().forEach(item ->{
+            enderecoEstadoRequestCreate.getRequest().forEach(item -> {
                 estadosRepository.save(estadosMapper.mapEstadoRequestToEstadoModel(item));
             });
 
@@ -156,13 +156,5 @@ public class EnderecosFacade {
         }
 
     }
-
-
-    private boolean enderecoInexistente(String cep) {
-
-        return enderecosRepository.findByCep(cep).isEmpty();
-    }
-
-
 
 }
