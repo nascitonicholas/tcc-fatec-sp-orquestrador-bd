@@ -5,7 +5,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -23,11 +26,11 @@ public class MateriasModel {
     private String nome;
     @Column(name = "semestre")
     private String semestre;
-    @OneToMany
-    @JoinColumn(name = "id_professores")
-    private List<UsuariosModel> professores;
+    @ManyToMany(targetEntity = UsuariosModel.class, cascade = CascadeType.ALL)
+    private List<UsuariosModel> professores = new ArrayList<>();
     @Column(name = "dt_criacao")
     private String dataCriacao;
     @Column(name = "dt_ultima_alteracao")
     private String dataUltimaAlteracao;
+
 }

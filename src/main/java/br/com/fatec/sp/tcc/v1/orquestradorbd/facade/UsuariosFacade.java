@@ -168,8 +168,10 @@ public class UsuariosFacade {
 
 
     private boolean usuarioInexistente(String cpf) {
-
-        return usuariosRepository.findByCpf(cpf).isEmpty();
+        if(usuariosRepository.findByCpf(cpf).isEmpty()){
+            return true;
+        }
+        throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Numero de Matricula já cadastrado.");
     }
 
 

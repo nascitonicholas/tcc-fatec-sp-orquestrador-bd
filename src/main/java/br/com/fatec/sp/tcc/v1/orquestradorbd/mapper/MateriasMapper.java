@@ -1,8 +1,9 @@
 package br.com.fatec.sp.tcc.v1.orquestradorbd.mapper;
 
+import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.MateriasRequestCreate;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.response.MateriasResponse;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.model.MateriasModel;
-import static br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.MateriasRequestCreate.MateriasCreate;
+import static br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.MateriasRequestCreate.MateriaCreate;
 import static br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.MateriasRequestUpdate.MateriasUpdate;
 import br.com.fatec.sp.tcc.v1.orquestradorbd.utils.Utils;
 import org.mapstruct.Mapper;
@@ -35,12 +36,10 @@ public interface MateriasMapper {
 
     @Mappings({
             @Mapping(target = "dataCriacao", expression = "java(Utils.dataAtualFormatada())"),
-            @Mapping(target = "nome", expression = "java(Utils.uppercase(materiasCreate.getNome()))"),
-            @Mapping(target = "semestre", expression = "java(Utils.uppercase(materiasCreate.getSemestre()))"),
+            @Mapping(target = "nome", expression = "java(Utils.uppercase(materiaCreate.getNome()))"),
+            @Mapping(target = "semestre", expression = "java(Utils.uppercase(materiaCreate.getSemestre()))"),
     })
-    MateriasModel mapCreateMateriaRequestToMateriasModel(MateriasCreate materiasCreate);
-
-
+    MateriasModel mapCreateMateriaRequestToMateriasModel(MateriaCreate materiaCreate);
 
     @Mappings({
             @Mapping(source = "materiasModel.id", target = "id"),

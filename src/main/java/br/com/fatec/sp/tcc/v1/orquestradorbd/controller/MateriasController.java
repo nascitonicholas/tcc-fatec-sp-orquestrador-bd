@@ -18,7 +18,7 @@ import java.util.List;
 import static br.com.fatec.sp.tcc.v1.orquestradorbd.enums.MensagensEnum.*;
 
 @RestController
-@RequestMapping("materias")
+@RequestMapping("/materias")
 public class MateriasController implements AbstractController<SaidaDefault> {
 
     @Autowired
@@ -42,7 +42,7 @@ public class MateriasController implements AbstractController<SaidaDefault> {
     }
 
     @PostMapping
-    public ResponseEntity<?> postVagas(@RequestBody @Validated MateriasRequestCreate materiasRequestCreate){
+    public ResponseEntity<?> postMaterias(@RequestBody @Validated MateriasRequestCreate materiasRequestCreate){
 
         materiasFacade.postMaterias(materiasRequestCreate);
 
@@ -50,7 +50,7 @@ public class MateriasController implements AbstractController<SaidaDefault> {
     }
 
     @PutMapping
-    public ResponseEntity<?> putVagas(@RequestBody @Validated MateriasRequestUpdate materiasRequestUpdate){
+    public ResponseEntity<?> putMaterias(@RequestBody @Validated MateriasRequestUpdate materiasRequestUpdate){
 
         materiasFacade.putMaterias(materiasRequestUpdate);
 
@@ -58,7 +58,7 @@ public class MateriasController implements AbstractController<SaidaDefault> {
     }
 
     @DeleteMapping
-    public ResponseEntity<?> deleteVagas(@RequestBody @Validated MateriasRequestDelete materiasRequestDelete){
+    public ResponseEntity<?> deleteMaterias(@RequestBody @Validated MateriasRequestDelete materiasRequestDelete){
 
         materiasFacade.deleteMaterias(materiasRequestDelete);
 
