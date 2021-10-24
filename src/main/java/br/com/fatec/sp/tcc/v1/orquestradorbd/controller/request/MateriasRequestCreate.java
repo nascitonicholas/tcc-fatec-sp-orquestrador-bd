@@ -17,12 +17,12 @@ public class MateriasRequestCreate {
 
     @Valid
     @JsonProperty("lista_materias")
-    private List<MateriasCreate> request;
+    private List<MateriaCreate> request;
 
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class MateriasCreate{
+    public static class MateriaCreate {
 
         @NotBlank(message = "Código da materia deve ser informado")
         @JsonProperty("cod_materia")

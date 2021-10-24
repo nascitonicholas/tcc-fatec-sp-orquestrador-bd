@@ -26,14 +26,11 @@ public class MateriasModel {
     private String nome;
     @Column(name = "semestre")
     private String semestre;
-    @ManyToMany(mappedBy = "materias")
+    @ManyToMany(targetEntity = UsuariosModel.class, cascade = CascadeType.ALL)
     private List<UsuariosModel> professores = new ArrayList<>();
     @Column(name = "dt_criacao")
     private String dataCriacao;
     @Column(name = "dt_ultima_alteracao")
     private String dataUltimaAlteracao;
 
-    public void addProfessores(UsuariosModel professor){
-        professores.add(professor);
-    }
 }
