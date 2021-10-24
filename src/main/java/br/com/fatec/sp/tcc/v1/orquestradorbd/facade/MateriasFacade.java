@@ -32,6 +32,8 @@ public class MateriasFacade {
 
     private final MateriasMapper materiasMapper = Mappers.getMapper(MateriasMapper.class);
 
+    private MateriasModel materiasModel = new MateriasModel();
+
 
     public List<MateriasResponse> getMaterias(){
 
@@ -51,9 +53,9 @@ public class MateriasFacade {
     public void postMaterias(MateriasRequestCreate materiasRequestCreate){
         try{
             materiasRequestCreate.getRequest().forEach(item -> {
-                MateriasModel materiasModel = materiasMapper.mapCreateMateriaRequestToMateriasModel(item);
-                validarProfessores(item.getIdProfessores(), materiasModel);
-                materiasRepository.save(materiasModel);
+                this.materiasModel = materiasMapper.mapCreateMateriaRequestToMateriasModel(item);
+                validarProfessores(item.getIdProfessores());
+                materiasRepository.saveAndFlush(materiasModel);
             });
         }catch (Exception e){
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, MESSAGE_ERROR_CREATE.getMessage() + e);
@@ -68,7 +70,7 @@ public class MateriasFacade {
                 Optional<MateriasModel> materia = materiasRepository.findById(item.getId());
                 if(materia.isPresent()){
                     MateriasModel materiasModel = materiasMapper.mapUpdateMateriasRequestToMateriasModel(item, materia.get());
-                    validarProfessores(item.getIdProfessores(), materiasModel);
+                    validarProfessores(item.getIdProfessores());
                     materiasRepository.save(materiasModel);
                 }
 
@@ -94,20 +96,17 @@ public class MateriasFacade {
         }
     }
 
-    private void validarProfessores(List<Long> idProfessores, MateriasModel materiasModel) {
-
-        List<UsuariosModel> professores = new ArrayList<>();
+    private void validarProfessores(List<Long> idProfessores) {
 
         idProfessores.forEach(item ->{
             Optional<UsuariosModel> professorById = usuariosRepository.findByNrMatricula(item);
             if(professorById.isPresent()){
-                professores.add(professorById.get());
+                this.materiasModel.addProfessores(professorById.get());
             }else{
                 throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, MESSAGE_ERROR_FOREING_KEY.messageErroFk("ids_professores"));
             }
         });
 
-        materiasModel.setProfessores(professores);
     }
 
 

@@ -5,7 +5,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -45,6 +48,11 @@ public class UsuariosModel {
     @OneToOne
     @JoinColumn(name = "id_turno_usuario")
     private TurnosModel turno;
+    @ManyToMany
+    @JoinTable(name = "materias_usuarios",
+            joinColumns = { @JoinColumn(name = "usuarios_nrMatricula") },
+            inverseJoinColumns = { @JoinColumn(name = "materia_id") })
+    private List<MateriasModel> materias = new ArrayList<>();
     @Column(name = "dt_criacao")
     private String dataCriacao;
     @Column(name = "dt_ultima_alteracao")
