@@ -26,6 +26,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.logging.Logger;
 
@@ -103,10 +104,20 @@ public class UsuariosFacade {
                 Optional<UsuariosModel> usuario = usuariosRepository.findByNrMatricula(item.getNrMatricula());
 
                 if (usuario.isPresent()) {
-                    UsuariosModel usuariosModel = usuarioMapper.mapUpdateUsuarioRequestToUsuarioModel(item, usuario.get());
-                    validarEndereco(item.getIdEndereco());
-                    validarCurso(item.getIdcurso());
-                    validarTurno(item.getIdturno());
+                    this.usuariosModel = usuarioMapper.mapUpdateUsuarioRequestToUsuarioModel(item, usuario.get());
+
+                    if(Objects.nonNull(item.getIdEndereco())){
+
+                        validarEndereco(item.getIdEndereco());
+                    }
+                    if(Objects.nonNull(item.getIdcurso())){
+
+                        validarCurso(item.getIdcurso());
+                    }
+                    if(Objects.nonNull(item.getIdturno())){
+
+                        validarTurno(item.getIdturno());
+                    }
                     usuariosRepository.save(usuariosModel);
                 }
             });

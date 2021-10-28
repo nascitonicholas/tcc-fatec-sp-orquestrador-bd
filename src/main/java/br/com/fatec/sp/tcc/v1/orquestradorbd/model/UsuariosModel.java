@@ -23,8 +23,14 @@ public class UsuariosModel {
     private String nome;
     @Column(name = "email")
     private String email;
+    @Column(name = "email_pessoal")
+    private String emailPessoal;
     @Column(name = "senha")
     private String senha;
+    @Column(name = "nome_mae")
+    private String nomeMae;
+    @Column(name = "nome_pai")
+    private String nomePai;
     @Column(name = "cpf")
     private String cpf;
     @Column(name = "rg")

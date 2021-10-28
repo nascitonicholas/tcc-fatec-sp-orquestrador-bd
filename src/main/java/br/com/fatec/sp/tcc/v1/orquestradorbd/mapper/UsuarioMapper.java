@@ -43,8 +43,11 @@ public interface UsuarioMapper {
     @Mappings({
             @Mapping(source = "usuariosModel.nrMatricula", target = "nrMatricula"),
             @Mapping(target = "nome", expression = "java(Utils.isNotNullOrEmpty(requestUpdate.getNome(),usuariosModel.getNome()))"),
+            @Mapping(target = "nomeMae", expression = "java(Utils.isNotNullOrEmpty(requestUpdate.getNomeMae(),usuariosModel.getNomeMae()))"),
+            @Mapping(target = "nomePai", expression = "java(Utils.isNotNullOrEmpty(requestUpdate.getNomePai(),usuariosModel.getNomePai()))"),
             @Mapping(target = "email", expression = "java(Utils.isNotNullOrEmpty(requestUpdate.getEmail(),usuariosModel.getEmail()))"),
-            @Mapping(target = "senha", expression = "java(Utils.verificarSenha(requestUpdate.getSenhaAtual(),usuariosModel.getSenha(), requestUpdate.getNovaSenha()))"),
+            @Mapping(target = "emailPessoal", expression = "java(Utils.isNotNullOrEmpty(requestUpdate.getEmailPessoal(),usuariosModel.getEmailPessoal()))"),
+            @Mapping(target = "senha", expression = "java(Utils.verificarSenha(requestUpdate,usuariosModel))"),
             @Mapping(target = "cpf", expression = "java(Utils.isNotNullOrEmpty(requestUpdate.getCpf(),usuariosModel.getCpf()))"),
             @Mapping(target = "rg", expression = "java(Utils.isNotNullOrEmpty(requestUpdate.getRg(),usuariosModel.getRg()))"),
             @Mapping(target = "certificadoMilitar", expression = "java(Utils.isNotNullOrEmpty(requestUpdate.getCertificadoMilitar(),usuariosModel.getCertificadoMilitar()))"),

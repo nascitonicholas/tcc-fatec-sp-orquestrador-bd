@@ -1,6 +1,8 @@
 package br.com.fatec.sp.tcc.v1.orquestradorbd.utils;
 
 
+import br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.UsuarioRequestUpdate;
+import br.com.fatec.sp.tcc.v1.orquestradorbd.model.UsuariosModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -10,6 +12,7 @@ import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
+import java.util.Objects;
 import java.util.Random;
 
 public class Utils {
@@ -84,17 +87,24 @@ public class Utils {
         }
     }
 
-    public static String verificarSenha(String senhaPassado, String senhaPresente, String senhaFuturo) {
+    public static String verificarSenha(UsuarioRequestUpdate.RequestUpdate requestUpdate, UsuariosModel usuariosModel) {
 
-        String senhaAntiga = encodeSenha(senhaPassado);
 
-        if (senhaAntiga.equals(senhaPresente)) {
-
-            return encodeSenha(senhaFuturo);
-        } else {
-
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "As senhas diferem");
+        if(Objects.isNull(requestUpdate.getSenhaAtual()) || Objects.isNull(requestUpdate.getNovaSenha())){
+            return usuariosModel.getSenha();
         }
+        else{
+            String senhaAntiga = encodeSenha(requestUpdate.getSenhaAtual());
+
+            if (senhaAntiga.equals(usuariosModel.getSenha())) {
+
+                return encodeSenha(requestUpdate.getNovaSenha());
+            } else {
+
+                throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "As senhas diferem");
+            }
+        }
+
     }
 
 }

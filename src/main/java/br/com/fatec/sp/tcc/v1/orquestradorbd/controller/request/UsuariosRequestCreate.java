@@ -37,9 +37,21 @@ public class UsuariosRequestCreate {
         @JsonProperty("email")
         private String email;
 
+        @NotBlank(message = "Email Pessoal deve ser informado")
+        @JsonProperty("email_pessoal")
+        private String emailPessoal;
+
         @NotBlank(message = "Senha deve ser informada")
         @JsonProperty("senha")
         private String senha;
+
+        @NotBlank(message = "Nome da mãe deve ser informado")
+        @JsonProperty("nome_mae")
+        private String nomeMae;
+
+        @NotBlank(message = "Nome do pai deve ser informado")
+        @JsonProperty("nome_pai")
+        private String nomePai;
 
         @NotBlank(message = "CPF deve ser informado")
         @JsonProperty("cpf")
