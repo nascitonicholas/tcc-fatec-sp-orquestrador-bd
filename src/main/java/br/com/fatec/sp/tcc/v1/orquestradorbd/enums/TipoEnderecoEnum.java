@@ -8,9 +8,9 @@ import java.util.Locale;
 
 public enum TipoEnderecoEnum {
 
-    RESIDENCIAL("Residencial"),
-    COMERCIAL("Comercial"),
-    COBRANCA("Cobrança");
+    Residencial("Residencial"),
+    Comercial("Comercial"),
+    Cobrança("Cobrança");
 
     @Setter
     @Getter
