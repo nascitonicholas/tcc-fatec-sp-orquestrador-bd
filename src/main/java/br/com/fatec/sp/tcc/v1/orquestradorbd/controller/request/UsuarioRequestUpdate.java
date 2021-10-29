@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -33,11 +34,20 @@ public class UsuarioRequestUpdate {
         @JsonProperty("email")
         private String email;
 
+        @JsonProperty("email_pessoal")
+        private String emailPessoal;
+
         @JsonProperty("senha_atual")
         private String senhaAtual;
 
         @JsonProperty("nova_senha")
         private String novaSenha;
+
+        @JsonProperty("nome_mae")
+        private String nomeMae;
+
+        @JsonProperty("nome_pai")
+        private String nomePai;
 
         @JsonProperty("cpf")
         private String cpf;

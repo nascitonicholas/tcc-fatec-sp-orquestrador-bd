@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 import static br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.UsuarioRequestUpdate.RequestUpdate;
 import static br.com.fatec.sp.tcc.v1.orquestradorbd.controller.request.UsuariosRequestCreate.RequestCreate;
 
-@Mapper(imports = {Utils.class})
+@Mapper(imports = {Utils.class,Objects.class})
 public interface UsuarioMapper {
 
     UsuarioResponse mapUsuarioModelToUsuarioResponse(UsuariosModel usuariosModel);
@@ -42,16 +42,19 @@ public interface UsuarioMapper {
 
     @Mappings({
             @Mapping(source = "usuariosModel.nrMatricula", target = "nrMatricula"),
-            @Mapping(target = "nome", expression = "java(Utils.isNotNullOrEmpty(requestUpdate.getNome(),usuariosModel.getNome()))"),
-            @Mapping(target = "email", expression = "java(Utils.isNotNullOrEmpty(requestUpdate.getEmail(),usuariosModel.getEmail()))"),
-            @Mapping(target = "senha", expression = "java(Utils.verificarSenha(requestUpdate.getSenhaAtual(),usuariosModel.getSenha(), requestUpdate.getNovaSenha()))"),
-            @Mapping(target = "cpf", expression = "java(Utils.isNotNullOrEmpty(requestUpdate.getCpf(),usuariosModel.getCpf()))"),
-            @Mapping(target = "rg", expression = "java(Utils.isNotNullOrEmpty(requestUpdate.getRg(),usuariosModel.getRg()))"),
-            @Mapping(target = "certificadoMilitar", expression = "java(Utils.isNotNullOrEmpty(requestUpdate.getCertificadoMilitar(),usuariosModel.getCertificadoMilitar()))"),
-            @Mapping(target = "numeroTitulo", expression = "java(Utils.isNotNullOrEmpty(requestUpdate.getNumeroTitulo(),usuariosModel.getNumeroTitulo()))"),
-            @Mapping(target = "zonaTitulo", expression = "java(Utils.isNotNullOrEmpty(requestUpdate.getZonaTitulo(),usuariosModel.getZonaTitulo()))"),
-            @Mapping(target = "telefone", expression = "java(Utils.isNotNullOrEmpty(requestUpdate.getTelefone(),usuariosModel.getTelefone()))"),
-            @Mapping(target = "celular", expression = "java(Utils.isNotNullOrEmpty(requestUpdate.getCelular(),usuariosModel.getCelular()))"),
+            @Mapping(target = "nome", expression = "java(Objects.nonNull(requestUpdate.getNome()) ? requestUpdate.getNome() : usuariosModel.getNome())"),
+            @Mapping(target = "nomeMae", expression = "java(Objects.nonNull(requestUpdate.getNomeMae()) ? requestUpdate.getNomeMae() : usuariosModel.getNomeMae())"),
+            @Mapping(target = "nomePai", expression = "java(Objects.nonNull(requestUpdate.getNomePai()) ? requestUpdate.getNomePai() : usuariosModel.getNomePai())"),
+            @Mapping(target = "email", expression = "java(Objects.nonNull(requestUpdate.getEmail()) ? requestUpdate.getEmail() :usuariosModel.getEmail())"),
+            @Mapping(target = "emailPessoal", expression = "java(Objects.nonNull(requestUpdate.getEmailPessoal()) ? requestUpdate.getEmailPessoal() : usuariosModel.getEmailPessoal())"),
+            @Mapping(target = "senha", expression = "java(Utils.verificarSenha(requestUpdate,usuariosModel))"),
+            @Mapping(target = "cpf", expression = "java(Objects.nonNull(requestUpdate.getCpf()) ? requestUpdate.getCpf() : usuariosModel.getCpf())"),
+            @Mapping(target = "rg", expression = "java(Objects.nonNull(requestUpdate.getRg()) ? requestUpdate.getRg() : usuariosModel.getRg())"),
+            @Mapping(target = "certificadoMilitar", expression = "java(Objects.nonNull(requestUpdate.getCertificadoMilitar()) ? requestUpdate.getCertificadoMilitar() : usuariosModel.getCertificadoMilitar())"),
+            @Mapping(target = "numeroTitulo", expression = "java(Objects.nonNull(requestUpdate.getNumeroTitulo()) ? requestUpdate.getNumeroTitulo() : usuariosModel.getNumeroTitulo())"),
+            @Mapping(target = "zonaTitulo", expression = "java(Objects.nonNull(requestUpdate.getZonaTitulo()) ? requestUpdate.getZonaTitulo() : usuariosModel.getZonaTitulo())"),
+            @Mapping(target = "telefone", expression = "java(Objects.nonNull(requestUpdate.getTelefone()) ? requestUpdate.getTelefone() :  usuariosModel.getTelefone())"),
+            @Mapping(target = "celular", expression = "java(Objects.nonNull(requestUpdate.getCelular()) ? requestUpdate.getCelular() : usuariosModel.getCelular())"),
             @Mapping(target = "dataUltimaAlteracao", expression = "java(Utils.dataAtualFormatada())")
     })
     UsuariosModel mapUpdateUsuarioRequestToUsuarioModel(RequestUpdate requestUpdate, UsuariosModel usuariosModel);
